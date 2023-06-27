@@ -1,70 +1,53 @@
-# Getting Started with Create React App
+# Workstation Booking App
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+The Workstation Booking App is a web application designed to manage and book workstations in a shared office space. It provides users with the ability to view available workstations, book a workstation for a specific date and time, and manage their bookings. This repository contains the source code for both the frontend and backend components of the application.
 
-## Available Scripts
+## Technologies Used
 
-In the project directory, you can run:
+- Frontend: React.js
+- Backend: Java Spring Boot (Spring JPA)
+- Database: PostgreSQL
 
-### `npm start`
+## Prerequisites
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+Before running the Workstation Booking App, ensure you have the following prerequisites installed:
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+- Node.js: Make sure you have Node.js and npm (Node Package Manager) installed.
+- Java Development Kit (JDK): Install JDK to run the Spring Boot backend.
+- PostgreSQL: Set up a PostgreSQL database and configure the connection details.
 
-### `npm test`
+## Getting Started
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Follow the steps below to get the Workstation Booking App up and running:
 
-### `npm run build`
+### Frontend
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+1. Navigate to the `workstation-booking` directory: `cd frontend`.
+2. Install the dependencies: `npm install`.
+3. Configure the backend API endpoint in the `.env` file. (Example: APP_API_URL=http://localhost:8080/api`)
+4. Start the development server: `npm start`.
+5. Access the app in your browser at `http://localhost:3000`.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+### Backend
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+1. Navigate to the `backend` directory: `cd backend`.
+2. Configure the database connection details in `application.properties` file.
+3. Build the project: `./mvnw clean package`.
+4. Run the application: `./mvnw spring-boot:run`.
+5. The backend server(Tomcat) will start at `http://localhost:8080`.
 
-### `npm run eject`
+## Database Setup
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+1. Create a new PostgreSQL database for the Workstation Booking App.
+2. Update the database connection details in the backend's `application.properties` file.
+3. Run the database migrations by executing the SQL scripts available in the `database` directory.
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## License
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+This project is licensed under [Arshil Akkala](LICENSE). You are free to use, modify, and distribute the code as per the terms of the license.
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+## Contact
 
-## Learn More
+If you have any questions or suggestions regarding the Workstation Booking App, please feel free to reach out to us at [arshilakkala@gmail.com](mailto:arshilakkala@gmail.com).
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+Happy booking!
