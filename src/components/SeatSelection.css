@@ -1,0 +1,40 @@
+.floor {
+    position: relative;
+    width: 800;
+    height: 425px;
+    border: 2px solid gray;
+    margin: auto;
+  }
+  
+  .floor-layout {
+    position:absolute;
+    /* left: 100px;
+    top: 100px; */
+    width: 500;
+    height: 400px;
+    background-color: rgb(255, 255, 141);
+  }
+  
+  .layout {
+    width: 100%;
+    margin-top: -1rem;
+    display: flex;
+    flex-direction: row;
+    gap: 16px;
+  }
+  
+  .marginLeft { margin-left: 20px}
+
+  .oval {
+    height: 100px;
+    width: 50px;
+    background-color: white;
+    border-radius: 50%;
+    border-color: black;
+    }
+  
+    .scrollable-container {
+      max-height: 530px; /* Adjust the maximum height as needed */
+      overflow-y: scroll;
+    }
+    

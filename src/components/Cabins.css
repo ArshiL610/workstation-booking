@@ -1,0 +1,82 @@
+/* .diagleft{
+    border-left: 70px inset black;
+    height: 3px;
+    position: fixed;
+    left: 56.5px;
+    top:340.5px;
+    transform: rotate(30deg);
+    transform-origin: top right;
+
+} */
+
+/* .diagright{
+    border-left: 70px inset black;
+    height: 3px;
+    position: fixed;
+    left: 374px;
+    top:305.5px;
+    transform: rotate(-30deg);
+    transform-origin: top right;
+} */
+
+/* .diagupleft{
+    border-left: 70px inset black;
+    height: 3px;
+    position: fixed;
+    left: 66px;
+    top:190px;
+    transform: rotate(-30deg);
+    transform-origin: bottom left;
+
+} */
+
+/* .diagupright{
+    border-left: 70px inset black;
+    height: 3px;
+    position: fixed;
+    left: 384px;
+    top:155px;
+    transform: rotate(30deg);
+    transform-origin: bottom left;
+
+} */
+
+.diagdeskrightup{
+    border-left: 55px inset black;
+    height: 3px;
+    position: fixed;
+    right: 30px;
+    top:152px;
+    transform: rotate(45deg);
+    transform-origin: bottom left;
+}
+
+.diagdeskdownleft{
+    border-left: 55px inset black;
+    height: 3px;
+    position: fixed;
+    right: 420px;
+    top:252px;
+    transform: rotate(45deg);
+    transform-origin: bottom left;
+}
+
+.diagdeskdownright{
+    border-left: 55px inset black;
+    height: 3px;
+    position: fixed;
+    right: 45px;
+    top:252px;
+    transform: rotate(-45deg);
+    transform-origin:  right;
+}
+
+.diagdeskleftup{
+    border-left: 55px inset black;
+    height: 3px;
+    position: fixed;
+    right: 420px;
+    top:352px;
+    transform: rotate(-45deg);
+    transform-origin: left;
+}
