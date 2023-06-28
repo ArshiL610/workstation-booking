@@ -1,7 +1,7 @@
 import './App.css';
 import Login from './components/Login';
 import Navbar from './components/Navbar';
-import { Routes, Route, useNavigate, useLocation, Navigate} from 'react-router-dom';
+import { Routes, Route, useNavigate, useLocation} from 'react-router-dom';
 import React, {useState, useEffect} from 'react';
 import HelpDesk from './components/HelpDesk';
 import SeatSelection from './components/SeatSelection';
@@ -22,6 +22,8 @@ import DropDownList from './components/DropDownList';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 // import SessionTimeout from './components/SessionTimeout';
+
+
 
 
 function App() {
@@ -54,11 +56,7 @@ function App() {
   // }, [isAuth, location, navigate]);
 
 
-  useEffect(() => {
-    const isLoggedIn = isAuth;
-    console.log('isLoggedIn', isLoggedIn);
-  })
-
+  
 
   return (
     <>
@@ -68,7 +66,6 @@ function App() {
       
       <Routes>
         <Route path='/' element={<Home />} />
-        {console.log('effect',isAuth)}
         <Route path="/signup" element={<SignUp />} />
         <Route path="/emailverification/:email" element={<EmailVerification />} />
         <Route path="/forgot-password" element={<ForgotPassword />} />
@@ -120,6 +117,9 @@ function App() {
     
     </>
   );
+
+  
 }
+
 
 export default App;

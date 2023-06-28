@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 import { TextField, Button, CircularProgress} from "@mui/material";
 import {Link, useNavigate} from "react-router-dom";
 import axios from 'axios';
@@ -12,7 +12,14 @@ const Login = ({isAuth, setIsAuth}) => {
     //for cursor loading
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
-    
+
+
+    useEffect(() =>{
+      if(isAuth){
+        navigate('/login');
+        console.log(isAuth)
+      }
+    },[isAuth, navigate])
   
 
     const handleSubmit = (event) => {
@@ -24,10 +31,10 @@ const Login = ({isAuth, setIsAuth}) => {
         } else if (!password) {
           toast.warning('Please enter your password');
         } else {
-              saveCredentialsToDatabase(email, password);
-              console.log(`Email: ${email}\nPassword: ${password}`);
-              setIsAuth(true);
-            
+            saveCredentialsToDatabase(email, password);
+            console.log(`Email: ${email}\nPassword: ${password}`);
+            setIsAuth(true);
+  
         }
     };
 
