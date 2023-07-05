@@ -1,6 +1,7 @@
 import { Box, Typography } from '@mui/material'
 import React from 'react'
 import Container from '@mui/material/Container';
+import Navbar from './Navbar';
 
 
 
@@ -8,7 +9,10 @@ import Container from '@mui/material/Container';
 const About = () => {
 
 return(
+  <div>
+    <Navbar />
     <Container maxWidth="lg" sx={{backgroundColor:'brightgray',  overflowY: 'auto', maxHeight: '90vh' }}>
+      
         <Box 
             sx={{
                 display: 'flex',
@@ -56,6 +60,7 @@ return(
         </Typography> 
         </Box>
     </Container>
+    </div>
 )
 };
 

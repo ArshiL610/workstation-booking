@@ -3,9 +3,10 @@ import { TextField, Button, CircularProgress} from "@mui/material";
 import {Link, useNavigate} from "react-router-dom";
 import axios from 'axios';
 import { toast} from 'react-toastify';
+import Navbar from './Navbar';
 
 
-const Login = ({isAuth, setIsAuth}) => {
+const Login = () => {
   
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -14,12 +15,12 @@ const Login = ({isAuth, setIsAuth}) => {
     const navigate = useNavigate();
 
 
-    useEffect(() =>{
-      if(isAuth){
-        navigate('/login');
-        console.log(isAuth)
-      }
-    },[isAuth, navigate])
+    // useEffect(() =>{
+    //   if(isAuth){
+    //     navigate('/login');
+    //     console.log(isAuth)
+    //   }
+    // },[isAuth, navigate])
   
 
     const handleSubmit = (event) => {
@@ -33,7 +34,7 @@ const Login = ({isAuth, setIsAuth}) => {
         } else {
             saveCredentialsToDatabase(email, password);
             console.log(`Email: ${email}\nPassword: ${password}`);
-            setIsAuth(true);
+            // setIsAuth(true);
   
         }
     };
@@ -63,6 +64,7 @@ const Login = ({isAuth, setIsAuth}) => {
 
     return (
         <React.Fragment>
+          <Navbar />
             <div style={{marginLeft:"35%", marginTop:"6%"}}>
             <form autoComplete='off' onSubmit={handleSubmit}>
                 <h2>Login Here</h2>

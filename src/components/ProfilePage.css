@@ -1,5 +1,41 @@
-.text{
+/* .text{
     background: linear-gradient(to top right, #5c258d, #4389a2);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
 }
+
+*/
+
+.profile-page {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;    
+  }
+  
+  .container {
+    box-Shadow: 0px 3px 10px rgba(0, 0, 0, 1);
+    width: 918px;
+    padding: 20px;
+    background-color: #f5f5f5;
+    border-radius: 8px;
+    /* box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); */
+  }
+  
+  .container h1 {
+    margin-bottom: 20px;
+    font-size: 24px;
+    font-weight: bold;
+    text-align: center;
+  }
+  
+  .text-field {
+    width: 100%;
+    margin-bottom: 20px;
+  }
+  
+  .button {
+    width: 100%;
+    margin-top: 20px;
+  }
+  

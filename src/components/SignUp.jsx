@@ -3,6 +3,7 @@ import { TextField, Button, Box, Typography, CircularProgress } from '@mui/mater
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { toast} from 'react-toastify';
+import Navbar from './Navbar';
 
 
 const SignUp = () => {
@@ -70,6 +71,7 @@ const SignUp = () => {
 
   return (
     <form autoComplete='off' onSubmit={handleSignUp}>
+      <Navbar />
       <Box
         sx={{
           display: 'flex',

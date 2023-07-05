@@ -3,6 +3,7 @@ import "./Home.css"
 import Container from '@mui/material/Container';
 import { Box,Button,Typography} from '@mui/material'
 import { useNavigate } from 'react-router-dom';
+import Navbar from './Navbar';
 
 const Home = () => {
 
@@ -14,6 +15,7 @@ const Home = () => {
 
     return(
         <div className='image'>
+            <Navbar />
             <Container maxWidth="xl">
                 <Container maxWidth="md" sx={{backgroundColor: 'rgba(255, 255, 255, 0.2)'}}>
                     <Box 

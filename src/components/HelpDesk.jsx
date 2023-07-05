@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import { TextField, Button, Stack, Snackbar } from '@mui/material';
 import { Link } from "react-router-dom"
 import Alert from '@mui/material/Alert';
+import Navbar from './Navbar';
  
 const HelpDesk = () => {
     
@@ -64,6 +65,7 @@ const HelpDesk = () => {
 
     return (
         <React.Fragment>
+            <Navbar />
             <h1 style={{marginLeft:"42%"}}>Enter Your Details</h1>
             <form onSubmit={handleSubmit} action={<Link to="/login" />} style={{marginLeft:'60px'}}>
                 <Stack spacing={2} direction="row" sx={{marginBottom: 4}}>

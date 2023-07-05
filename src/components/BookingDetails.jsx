@@ -1,166 +1,176 @@
-import React, {useState} from 'react'
-import { useLocation, useNavigate } from 'react-router-dom'
+import React, {useState} from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { Box, Button, Grid, Paper, TextField, Typography, CircularProgress } from '@mui/material';
-import { styled } from '@mui/material/styles';
 import axios from 'axios';
-import { toast} from 'react-toastify';
+import { toast } from 'react-toastify';
+import Navbar from './Navbar';
 
 const BookingDetails = () => {
+  const location = useLocation();
+  const navigate = useNavigate();
 
-    const location = useLocation();
-    const navigate = useNavigate();
+  const {
+    fromDate,
+    fromTime,
+    toDate,
+    toTime,
+    purpose,
+    description,
+    subLocation,
+    repeatOption,
+    allDay,
+    meetingType,
+    name
+  } = location.state;
+
+  const [email, setEmail] = useState('');
+  const [loading, setLoading] = useState(false);
+
+  const sendEmail = () => {
+    // Implement your logic to send the email
+    const bookingDetails = {
+        email : email,
+        purpose : purpose,
+        fromDate : fromDate,
+        toDate : toDate,
+        fromTime : allDay ? "" : fromTime,
+        toTime : allDay ? "" : toTime,
+        subLocation : subLocation,
+        meetingType : meetingType,
+        repeatOption : repeatOption,
+        description : description,
+        allDay : allDay
+    }
     
+    setLoading(true);
 
-    const queryParams = new URLSearchParams(location.search);
+    axios.post(`http://localhost:8080/sendmail`, bookingDetails)
+    .then(response => {
+        setLoading(false)
+        toast.success('Email has been sent');
+        setEmail('')
+    })
+    .catch(error => {
+        setLoading(false);
+        toast.error('Error sending email', error);
+        setEmail('');
+    })
+  };
 
-    const formattedDate1 = queryParams.get('date1');
-    const formattedDate2 = queryParams.get('date2');
-    const formattedTime1 = queryParams.get('time1');
-    const formattedTime2 = queryParams.get('time2');
-    const seatNumber = queryParams.get('seat');
-    const bookingLocation = queryParams.get('location');
-    const purpose = queryParams.get('purpose');
-    const description = queryParams.get('description');
-
-    const [email, setEmail] = useState('');
-    //for cursor loading
-    const [loading, setLoading] = useState(false);
-
-    const Item = styled(Paper)(({ theme }) => ({
-        backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
-        ...theme.typography.body2,
-        padding: theme.spacing(1),
-        textAlign: 'center',
-        color: theme.palette.text.secondary,
-      }));
-
-    
-    const sendEmail = () =>{
-        const bookingDetails = {
-            email : email,
-            purpose : purpose,
-            description : description,
-            location : bookingLocation,
-            fromDate : formattedDate1,
-            toDate : formattedDate2,
-            fromTime : formattedTime1,
-            toTime : formattedTime2,
-            seatNumber : seatNumber
-        }
-
-        setLoading(true);
-
-        axios.post(`http://localhost:8080/sendmail`, bookingDetails)
-        .then(response => {
-            setLoading(false);
-            toast.success('Email has been sent');
-            setEmail('');
-            navigate('/bookings', 
-                        { state: { 
-                            date1: formattedDate1, 
-                            date2: formattedDate2, 
-                            time1: formattedTime1, 
-                            time2: formattedTime2, 
-                            seat: seatNumber, 
-                            purpose: purpose,
-                            description: description,
-                            location: bookingLocation
-                        }}
-                    );
-        })
-        .catch(error => {
-            setLoading(false);
-            toast.error('Error sending email', error);
-            setEmail('');
-        });
-
-        
-    };
-
-
-    return(
-        
-        <Box 
-            sx={{
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'center',
-                maxWidth: 'auto',
-                margin: '0 auto',
-                // background: 'linear-gradient(to top right, #403b4a, #e7e9bb 60%)',
-                // background: 'linear-gradient(to right bottom, #73c8a9 40%, #373b44)',
-                background: 'linear-gradient(to right bottom, #dad299 , #b0dab9 40%)',
-                height:'100vh'
-            }}
-        >
-            <Paper variant='elevation' elevation={10} sx={{width:'800px',mt:3, height:'430px', background:'linear-gradient(to right, #70e1f5, #ffd194)'}}>
-                <Typography align='center' sx={{textTransform:'uppercase', fontSize:'2rem', mt:1}}><strong>Booking Details</strong></Typography>
-                <Paper variant='elevation' elevation={7} sx={{width:'620px', height:'340px',justifyContent:'center', mt:2, ml:'90px', background:'transparent'}}>
-                    <Grid container rowSpacing={1} columnSpacing={{ xs:1 , sm:2 , md:2}} sx={{ml:'50px'}} >
-                        <Grid item xs={5.5} sx={{ml:3.3, mt:2}} >
-                            <Item sx={{height:'24px', justifyContent:'left', background:'linear-gradient(to right, #70e1f5, #ffd194)'}}>
-                                <strong style={{color:'black'}}>From Date : {formattedDate1}</strong>
-                            </Item>
-                        </Grid>
-                        <Grid item xs={5.5} sx={{mt:2}}>
-                            <Item sx={{height:'24px', justifyContent:'left', background:'linear-gradient(to left, #70e1f5, #ffd194)'}}>
-                                <strong style={{color:'black'}}>To Date : {formattedDate2}</strong>
-                            </Item>
-                        </Grid>
-                        <Grid item xs={5.5} sx={{mt:1, ml:3.3}}>
-                            <Item sx={{height:'24px', justifyContent:'left', background:'linear-gradient(to right, #70e1f5, #ffd194)'}}>
-                                <strong style={{color:'black'}}>From Time : {formattedTime1}</strong>
-                            </Item>
-                        </Grid>
-                        <Grid item xs={5.5} sx={{mt:1}}>
-                            <Item sx={{height:'24px', justifyContent:'left', background:'linear-gradient(to left, #70e1f5, #ffd194)'}}>
-                                <strong style={{color:'black'}}>To Time : {formattedTime2}</strong>
-                            </Item>
-                        </Grid>
-                        <Grid item xs={5.5} sx={{mt:'-1px', ml:3.3}}>
-                            <Item sx={{height:'24px', justifyContent:'left', background:'linear-gradient(to bottom, #70e1f5, #ffd194)'}}>
-                                <strong style={{color:'black'}}>Location : {bookingLocation}</strong>
-                                {console.log(bookingLocation)}
-                            </Item>
-                        </Grid>
-                        <Grid item xs={5.5} sx={{ mt:'-23px'}}>
-                            <Item sx={{height:'24px',width:'260px', justifyContent:'left', mt:3, background:'linear-gradient(to top, #70e1f5, #ffd194)'}}>
-                                <strong style={{color:'black'}}>Selected Seat : {seatNumber}</strong>
-                            </Item>
-                        </Grid>
-                        <Grid item xs={5.5} sx={{ mt:'-23px', ml:3.3}}>
-                            <Item sx={{height:'24px',width:'552px', justifyContent:'left', mt:3, background:'linear-gradient(to top, #70e1f5, #ffd194)'}}>
-                                <strong style={{color:'black'}}>Purpose : {purpose}</strong>
-                            </Item>
-                        </Grid>
-                        <Grid item xs={5.5} sx={{ mt:'-23px', ml:-36.5}}>
-                            <Item sx={{height:'70px',width:'552px', justifyContent:'left', mt:9.5, background:'linear-gradient(to top, #70e1f5, #ffd194)'}}>
-                                <strong style={{color:'black'}}>Description : {description}</strong>
-                            </Item>
-                        </Grid>
-                    </Grid>
-                </Paper>
-            </Paper>
-            <div style={{ display: 'flex', justifyContent: 'center', flexDirection:'row' }}>
-                <TextField 
+  return (
+    <div>
+      <Navbar name={name}/>
+    <Box
+      sx={{
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'center', 
+        margin:'0 auto',
+        maxWidth: 'auto',
+        height: '100vh'
+      }}
+    >
+      
+      <Paper
+        elevation={6}
+        sx={{
+          padding: '2rem',
+          maxWidth: '500px',
+          width: '800px',
+          height:'320px',
+          mt:-6
+        }}
+      >
+        <Typography variant="h4" align="center" sx={{ mt:-2, mb:2 }}>
+          <b>Booking Details</b>
+        </Typography>
+        <Grid container spacing={2} sx={{ ml:6, mt:3}}>
+          <Grid item xs={4}>
+            <Typography variant="subtitle1"><b>Purpose : </b></Typography>
+          </Grid>
+          <Grid item xs={8}>
+            <Typography variant="body1" sx={{ml:-4}}>{purpose}</Typography>
+          </Grid>
+        </Grid>
+        <Grid container spacing={2} sx={{  ml:6 }}>
+          <Grid item xs={4}>
+            <Typography variant="subtitle1"><b>From Date : </b></Typography>
+          </Grid>
+          <Grid item xs={8}>
+            <Typography variant="body1" sx={{ml:-4}}>{fromDate}</Typography>
+          </Grid>
+        </Grid>
+        <Grid container spacing={2} sx={{  ml:6 }}>
+          <Grid item xs={4}>
+            <Typography variant="subtitle1"><b>To Date : </b></Typography>
+          </Grid>
+          <Grid item xs={8}>
+            <Typography variant="body1" sx={{ml:-4}}>{toDate}</Typography>
+          </Grid>
+        </Grid>
+        <Grid container spacing={2} sx={{  ml:6 }}>
+          <Grid item xs={4}>
+            <Typography variant="subtitle1"><b>Time : </b></Typography>
+          </Grid>
+          <Grid item xs={8}>
+            <Typography variant="body1" sx={{ml:-4}}>
+              {allDay ? 'All Day' : `${fromTime} - ${toTime}`}
+            </Typography>
+          </Grid>
+        </Grid>
+        <Grid container spacing={2} sx={{  ml:6 }}>
+          <Grid item xs={4}>
+            <Typography variant="subtitle1"><b>Location : </b></Typography>
+          </Grid>
+          <Grid item xs={8}>
+            <Typography variant="body1" sx={{ml:-4}}>{subLocation}</Typography>
+          </Grid>
+        </Grid>
+        <Grid container spacing={2} sx={{ ml:6 }}>
+          <Grid item xs={4}>
+            <Typography variant="subtitle1"><b>Repeat : </b></Typography>
+          </Grid>
+          <Grid item xs={8}>
+            <Typography variant="body1" sx={{ml:-4}}>{repeatOption}</Typography>
+          </Grid>
+        </Grid>
+        <Grid container spacing={2} sx={{  ml:6 }}>
+          <Grid item xs={4}>
+            <Typography variant="subtitle1"><b>Meeting Mode : </b></Typography>
+          </Grid>
+          <Grid item xs={8}>
+            <Typography variant="body1" sx={{ml:-4}}>{meetingType}</Typography>
+          </Grid>
+        </Grid>
+        <Grid container spacing={2} sx={{  ml:6 }}>
+          <Grid item xs={4}>
+            <Typography variant="subtitle1"><b>Description : </b></Typography>
+          </Grid>
+          <Grid item xs={6}>
+            <Typography variant="body1" sx={{ml:-4}}>{description}</Typography>
+          </Grid>
+        </Grid>
+      </Paper>
+      <div style={{ display: 'flex', justifyContent: 'center', flexDirection:'row' }}>
+                 <TextField 
                     autoComplete='off' variant='outlined' 
-                    label='Enter email' value={email} onChange={e => setEmail(e.target.value)} 
-                    type="text" color='info' required size='small' 
-                    sx={{ml:39,mr:5, mt:2.5, width:'23rem'}}
-                    disabled={loading}
-                />
-                <Button 
-                    variant='contained' size="medium" 
-                    color='inherit' onClick={sendEmail} 
-                    disabled={loading}
-                    sx={{mr:40,mt:2.5, borderRadius:'30px', background:'linear-gradient(to top right, #70e1f5, #ffd194)', color:'black'}}>
-                    {loading ? <CircularProgress color='inherit' size={24}/> : 'Send Email'}
-                </Button>
-            </div>
-        </Box>
-        
-        
-    )
-}
+                     label='Enter email' value={email} onChange={e => setEmail(e.target.value)} 
+                     type="text" color='info' required size='small' 
+                     sx={{ml:40,mr:3, mt:2.5, width:'23rem'}}
+                     disabled={loading}
+                 />
+                 <Button 
+                     variant='contained' size="medium" 
+                     color='info' onClick={sendEmail} 
+                     disabled={loading}
+                     sx={{mr:40,mt:2.5, borderRadius:'30px', color:'white'}}>
+                     {loading ? <CircularProgress color='inherit' size={24}/> : 'Send Email'}
+                 </Button>
+             </div>
+    </Box>
+    </div>
+  );
+};
 
 export default BookingDetails;

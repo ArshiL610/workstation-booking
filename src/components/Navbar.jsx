@@ -6,13 +6,14 @@ import MenuItem from '@mui/material/MenuItem';
 import Menu from '@mui/material/Menu';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import Logout from '@mui/icons-material/Logout';
-import { useNavigate} from 'react-router-dom';
+import { useNavigate, useParams} from 'react-router-dom';
 import InfoIcon from '@mui/icons-material/Info';
 import HomeIcon from '@mui/icons-material/Home';
 
 
-const Navbar = ({isAuth, setIsAuth}) => {
+const Navbar = ({name}) => {
 
+  // const {name} = useParams();
   const navigate = useNavigate();
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
@@ -32,7 +33,7 @@ const Navbar = ({isAuth, setIsAuth}) => {
     navigate("/about");
   }
   const handleLogOut = () => {
-    setIsAuth(false);
+    // setIsAuth(false);
     setAnchorEl(null);
     navigate("/login");
   }
@@ -42,16 +43,13 @@ const Navbar = ({isAuth, setIsAuth}) => {
   return (
     <AppBar position='sticky' color='transparent' style={{backgroundColor:'black'}}>
       <Toolbar>
-
-          
-        
         {/* for the Title of the website */}
         <Typography align='justify' fontFamily={'monospace'} color="white" fontSize={35} component='div' variant="h3" sx={{ flexGrow: 1 }}>
           <strong style={{color:'red'}}>WORKSTATION</strong> <strong> BOOKING</strong>
         </Typography>
       
         {/* for the right handside account icon dropdown button */}
-        <Tooltip title="Profile">
+        <Tooltip title={name}>
           <IconButton
             onClick={handleClick}
             size="small"
@@ -68,32 +66,32 @@ const Navbar = ({isAuth, setIsAuth}) => {
         open={open}
         onClose={handleClose}
         onClick={handleClose}
-        PaperProps={{
-          elevation: 0,
-          sx: {
-            overflow: 'visible',
-            filter: 'drop-shadow(0px 2px 8px rgba(0,0,0,0.32))',
-            mt: 1.5,
-            '& .MuiAvatar-root': {
-              width: 32,
-              height: 32,
-              ml: -0.5,
-              mr: 1,
-            },
-            '&:before': {
-              content: '""',
-              display: 'block',
-              position: 'absolute',
-              top: 0,
-              right: 14,
-              width: 10,
-              height: 10,
-              bgcolor: 'background.paper',
-              transform: 'translateY(-50%) rotate(45deg)',
-              zIndex: 0,
-            },
-          },
-        }}
+        // PaperProps={{
+        //   elevation: 0,
+        //   sx: {
+        //     overflow: 'visible',
+        //     filter: 'drop-shadow(0px 2px 8px rgba(0,0,0,0.32))',
+        //     mt: 1.5,
+        //     '& .MuiAvatar-root': {
+        //       width: 32,
+        //       height: 32,
+        //       ml: -0.5,
+        //       mr: 1,
+        //     },
+        //     '&:before': {
+        //       content: '""',
+        //       display: 'block',
+        //       position: 'absolute',
+        //       top: 0,
+        //       right: 14,
+        //       width: 10,
+        //       height: 10,
+        //       bgcolor: 'background.paper',
+        //       transform: 'translateY(-50%) rotate(45deg)',
+        //       zIndex: 0,
+        //     },
+        //   },
+        // }}
         transformOrigin={{ horizontal: 'right', vertical: 'top' }}
         anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
       >

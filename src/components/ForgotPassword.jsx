@@ -3,6 +3,7 @@ import axios from 'axios';
 import React, {useState} from 'react'
 import {useNavigate } from 'react-router-dom';
 import { toast} from 'react-toastify';
+import Navbar from './Navbar';
 
 const ForgotPassword = () => {
 
@@ -36,6 +37,7 @@ const ForgotPassword = () => {
     return(
          
         <form autoComplete='off' onSubmit={handleClick}>
+            <Navbar />
             <Box
                 sx={{
                     display: 'flex',

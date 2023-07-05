@@ -3,6 +3,7 @@ import axios from 'axios';
 import React, {useState} from 'react'
 import { useNavigate, useParams } from 'react-router-dom';
 import { toast} from 'react-toastify';
+import Navbar from './Navbar';
 
 
 const ResetVerify = () => {
@@ -51,6 +52,7 @@ const ResetVerify = () => {
 
     return(
         <form autoComplete='off'>
+            <Navbar />
             <Box
                 sx={{
                 display: 'flex',

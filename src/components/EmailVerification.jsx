@@ -3,6 +3,7 @@ import axios from 'axios';
 import { TextField, Button, Box, Typography, CircularProgress} from "@mui/material";
 import { useParams, useNavigate } from 'react-router-dom';
 import { toast} from 'react-toastify';
+import Navbar from './Navbar';
 
 
 const EmailVerification = () => {
@@ -54,6 +55,7 @@ const EmailVerification = () => {
 
     return (
         <form autoComplete='off' >
+            <Navbar />
             <Box
                 sx={{
                 display: 'flex',
