@@ -283,16 +283,16 @@ const ProfilePage = () => {
                 onChange={handleSubLocationChange}
                 variant="standard"
                 size="small"
-                sx={{ width: '25%', marginLeft: -1}}
+                sx={{ width: '30%', marginLeft: -1}}
                 // InputLabelProps={{ shrink: true }}
               >
-                <MenuItem value="Level 1 - Workstation 1" sx={{ml:2}}>Level 1 - Workstation 1</MenuItem>
-                <MenuItem value="Level 1 - Workstation 2" sx={{ml:2}}>Level 1 - Workstation 2</MenuItem>
-                <MenuItem value="Level 1 - Workstation 3" sx={{ml:2}}>Level 1 - Workstation 3</MenuItem>
-                <MenuItem value="Level 1 - Workstation 4" sx={{ml:2}}>Level 1 - Workstation 4</MenuItem>
-                <MenuItem value="Level 1 - Workstation 5" sx={{ml:2}}>Level 1 - Workstation 5</MenuItem>
-                <MenuItem value="Level 1 - Workstation 6" sx={{ml:2}}>Level 1 - Workstation 6</MenuItem>
-                <MenuItem value="Level 1 - Workstation 7" sx={{ml:2}}>Level 1 - Workstation 7</MenuItem>
+                <MenuItem value="Level 1 - Workstation 1 (Seats 5)" sx={{ml:2}}>Level 1 - Workstation 1 (Seats 5)</MenuItem>
+                <MenuItem value="Level 1 - Workstation 2 (Seats 4)" sx={{ml:2}}>Level 1 - Workstation 2 (Seats 4)</MenuItem>
+                <MenuItem value="Level 1 - Workstation 3 (Seats 7)" sx={{ml:2}}>Level 1 - Workstation 3 (Seats 6)</MenuItem>
+                <MenuItem value="Level 1 - Workstation 4 (Seats 8)" sx={{ml:2}}>Level 1 - Workstation 4 (Seats 5)</MenuItem>
+                <MenuItem value="Level 1 - Workstation 5 (Seats 8)" sx={{ml:2}}>Level 1 - Workstation 5 (Seats 4)</MenuItem>
+                <MenuItem value="Level 1 - Workstation 6 (Seats 5)" sx={{ml:2}}>Level 1 - Workstation 6 (Seats 6)</MenuItem>
+                <MenuItem value="Level 1 - Workstation 7 (Seats 10)" sx={{ml:2}}>Level 1 - Workstation 7 (Seats 6)</MenuItem>
               </Select>
             )}
             {location === 'level2' && (
@@ -302,14 +302,14 @@ const ProfilePage = () => {
                 onChange={handleSubLocationChange}
                 variant="standard"
                 size="small"
-                sx={{ width: '25%', marginLeft: 1 }}
-                InputLabelProps={{ shrink: true }}
+                sx={{ width: '30%', marginLeft: -1}}
+                // InputLabelProps={{ shrink: true }}
               >
-                <MenuItem value="Level 2 - Boardroom 1" sx={{ml:2}}>Level 2 - Boardroom 1</MenuItem>
-                <MenuItem value="Level 2 - Boardroom 2" sx={{ml:2}}>Level 2 - Boardroom 2</MenuItem>
-                <MenuItem value="Level 2 - Boardroom 3" sx={{ml:2}}>Level 2 - Boardroom 3</MenuItem>
-                <MenuItem value="Level 2 - Boardroom 4" sx={{ml:2}}>Level 2 - Boardroom 4</MenuItem>
-                <MenuItem value="Level 2 - Boardroom 5" sx={{ml:2}}>Level 2 - Boardroom 5</MenuItem>
+                <MenuItem value="Level 2 - Boardroom 1 (Seats 10)" sx={{ml:2}}>Level 2 - Boardroom 1 (Seats 10)</MenuItem>
+                <MenuItem value="Level 2 - Boardroom 2 (Seats 6)" sx={{ml:2}}>Level 2 - Boardroom 2 (Seats 6)</MenuItem>
+                <MenuItem value="Level 2 - Boardroom 3 (Seats 5)" sx={{ml:2}}>Level 2 - Boardroom 3 (Seats 5)</MenuItem>
+                <MenuItem value="Level 2 - Boardroom 4 (Seats 10)" sx={{ml:2}}>Level 2 - Boardroom 4 (Seats 10)</MenuItem>
+                <MenuItem value="Level 2 - Boardroom 5 (Seats 8)" sx={{ml:2}}>Level 2 - Boardroom 5 (Seats 8)</MenuItem>
               </Select>
             )}
             {location === 'cabins' && (
@@ -319,8 +319,8 @@ const ProfilePage = () => {
                 onChange={handleSubLocationChange}
                 variant="standard"
                 size="small"
-                sx={{ width: '25%', marginLeft: 1 }}
-                InputLabelProps={{ shrink: true }}
+                sx={{ width: '25%', marginLeft: -1 }}
+                // InputLabelProps={{ shrink: true }}
               >
                 <MenuItem value="Cabins - Seat 1" sx={{ml:2}}>Cabins - Seat 1</MenuItem>
                 <MenuItem value="Cabins - Seat 2" sx={{ml:2}}>Cabins - Seat 2</MenuItem>
