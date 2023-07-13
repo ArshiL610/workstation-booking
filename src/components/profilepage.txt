@@ -207,3 +207,107 @@
 };
 
 export default ProfilePage;
+
+
+
+------------------------------------------
+
+/ useEffect(() => {
+  //   const fetchRooms = async () => {
+  //     try {
+  //       const response = await axios.get(`http://localhost:8080/api/rooms/get`);
+  //       setRooms(response.data);
+  //       console.log(response.data)
+  //     }
+  //     catch(error){
+  //       console.error('Error fetching room data : ', error);
+  //     }
+  //   };
+
+  //   fetchRooms();
+  // },[]);
+
+   // const getRoomAvailability = useCallback((roomName) => {
+  //   const room = rooms.find((room) => room.roomname === roomName);
+  
+  //   if (!room?.roomname) {
+  //     return <b style={{color:'green'}}>Free</b>;
+  //     // return "Free";
+  //   }
+  
+  //   if (allDay && room.bookedDate) {
+  //     const requestedDateRange = `${dayjs(fromDate).format('DD-MM-YYYY')} - ${dayjs(toDate).format('DD-MM-YYYY')}`;
+  //     if (room.bookedDate === requestedDateRange) {
+  //       return <b style={{color:'red'}}>Occupied</b>;
+  //       // return "Occupied";
+  //     }
+  //   } else if (room.bookedDate && room.bookedSlot) {
+  //     if (room.roomname === roomName) {
+  //       // const requestedDateRange = `${dayjs(fromDate).format('DD-MM-YYYY')} - ${dayjs(toDate).format('DD-MM-YYYY')}`;
+  //       // const requestedTimeSlot = `${fromTime} - ${toTime}`;
+  //       const bookedDateRange = room.bookedDate.split(' - ');
+  //       const bookedTimeRange = room.bookedSlot.split(' - ');
+    
+  //       const bookedStartDate = bookedDateRange[0];
+  //       const bookedEndDate = bookedDateRange[1];
+  //       const bookedStartTime = bookedTimeRange[0];
+  //       const bookedEndTime = bookedTimeRange[1];
+    
+  //       const requestedStartDate = dayjs(fromDate).format('DD-MM-YYYY');
+  //       const requestedEndDate = dayjs(toDate).format('DD-MM-YYYY');
+  //       const requestedStartTime = fromTime;
+  //       const requestedEndTime = toTime;
+    
+  //       const isOverlap =
+  //         (dayjs(bookedStartDate, 'DD-MM-YYYY').isBefore(requestedEndDate, 'day', true) &&
+  //         dayjs(bookedEndDate, 'DD-MM-YYYY').isAfter(requestedStartDate, 'day', true)) &&
+  //         (dayjs(bookedStartTime, 'hh:mm A').isBefore(requestedEndTime, 'minute') &&
+  //         dayjs(bookedEndTime, 'hh:mm A').isAfter(requestedStartTime, 'minute'));
+    
+  //       if (isOverlap) {
+  //         return <b style={{ color: 'red' }}>Occupied</b>;
+  //       }
+  //     }
+  //   }
+  
+  //   return <b style={{color:'green'}}>Free</b>;
+  //   // return "Free";
+  // },[fromDate, toDate, fromTime, toTime, allDay, rooms]);
+
+
+
+// const getRoomAvailability = (roomName) => {
+  //   const room = rooms.find((room) => room.roomname === roomName);
+  
+  //   if (!room?.roomname) {
+  //     return <b style={{color:'green'}}>Free</b>;
+  //   }
+  
+  //   if (allDay && room.bookedDate) {
+  //     const requestedDateRange = `${dayjs(fromDate).format('DD-MM-YYYY')} - ${dayjs(toDate).format('DD-MM-YYYY')}`;
+  //     if (room.bookedDate === requestedDateRange) {
+  //       return <b style={{ textDecoration: 'line-through', color:'red' }}>Free</b>; //occupied
+  //     }
+  //   } else if (room.bookedDate && room.bookedSlot) {
+  //     const requestedDateRange = `${dayjs(fromDate).format('DD-MM-YYYY')} - ${dayjs(toDate).format('DD-MM-YYYY')}`;
+  //     const requestedTimeSlot = `${fromTime} - ${toTime}`;
+  //     const bookedTimeRange = room.bookedSlot;
+  //     const [requestedStartTime, requestedEndTime] = requestedTimeSlot.split(' - ');
+  
+  //     for (const bookedDateRange of room.bookedDate.split(',')) {
+  //       const [bookedFromDate, bookedToDate] = bookedDateRange.split(' - ');
+  //       const [bookedStartTime, bookedEndTime] = bookedTimeRange.split(' - ');
+  
+  //       const isOverlap =
+  //         dayjs(requestedDateRange, 'DD-MM-YYYY - DD-MM-YYYY').isBetween(bookedFromDate, bookedToDate, 'day', '[]') &&
+  //         (dayjs(requestedStartTime, 'hh:mm A').isBetween(bookedStartTime, bookedEndTime, null, '[]', 'minute') ||
+  //           dayjs(requestedEndTime, 'hh:mm A').isBetween(bookedStartTime, bookedEndTime, null, '[]', 'minute'));
+  
+  //       if (isOverlap) {
+  //         return <b style={{ textDecoration: 'line-through', color:'red' }}>Free</b>; //occupied
+  //       }
+  //     }
+  //   }
+  
+  //   return <b style={{color:'green'}}>Free</b>;
+  // };
