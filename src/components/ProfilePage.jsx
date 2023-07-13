@@ -146,24 +146,34 @@ const ProfilePage = () => {
   };
   
 
-  //for time dropdown
   const generateTimeOptions = () => {
     const options = [];
     const startTime = new Date();
-    startTime.setHours(0, 0, 0, 0); // Setting initial time to 12:00 AM
-    while (startTime.getHours() !== 23 || startTime.getMinutes() !== 30) {
+    startTime.setSeconds(0, 0);    // Setting initial time-interval to the nearest minute
+    
+    if (dayjs(startTime).isSame(fromDate, 'day')) {
+      // Adjust the start time to the nearest time interval
+      const currentMinutes = startTime.getMinutes();
+      const roundedMinutes = Math.ceil(currentMinutes / 30) * 30;
+      startTime.setMinutes(roundedMinutes);
+    } else {
+      startTime.setHours(0, 0, 0, 0); // Setting initial time to 12:00 AM as default time
+    }
+    
+    while (startTime.getHours() !== 23 || startTime.getMinutes() !== 30) { //changed time here from 23 --> 24
       const formattedTime = startTime.toLocaleTimeString('en-US', {
         hour: 'numeric',
         minute: '2-digit',
         hour12: true,
       });
       options.push({ label: formattedTime, value: formattedTime });
-
+  
       startTime.setMinutes(startTime.getMinutes() + 30); // Incrementing time by 30 minutes
     }
-
+  
     return options;
   };
+  
 
   //to check if All Day switch is checked or not
   const isAllDay = () => {

@@ -276,6 +276,31 @@ export default ProfilePage;
 
 
 
+  time code
+  //for time dropdown
+  // const generateTimeOptions = () => {
+  //   const options = [];
+  //   const startTime = new Date();
+  //   startTime.setHours(0, 0, 0, 0); // Setting initial time to 12:00 AM
+
+
+
+  //   while (startTime.getHours() !== 23 || startTime.getMinutes() !== 30) {
+  //     const formattedTime = startTime.toLocaleTimeString('en-US', {
+  //       hour: 'numeric',
+  //       minute: '2-digit',
+  //       hour12: true,
+  //     });
+  //     options.push({ label: formattedTime, value: formattedTime });
+
+  //     startTime.setMinutes(startTime.getMinutes() + 30); // Incrementing time by 30 minutes
+  //   }
+
+  //   return options;
+  // };
+
+
+
 // const getRoomAvailability = (roomName) => {
   //   const room = rooms.find((room) => room.roomname === roomName);
   
