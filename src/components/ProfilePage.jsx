@@ -78,7 +78,7 @@ const ProfilePage = () => {
 
     else if(existingFromDate && existingFromTime && existingToDate && existingToTime){ 
       console.log(`${existingFromDate} ${existingToDate} ${room.fromTime} ${room.toTime} ${requestedFromDate} ${requestedToDate} ${fromTime} ${toTime}`)
-      console.log('else if loop is working heree..')       //logic issue
+      //logic issue resolved
       const isOverLap =
           (
             (requestedFromDate <= existingToDate) && (requestedToDate >= existingFromDate)
@@ -160,7 +160,7 @@ const ProfilePage = () => {
       startTime.setHours(0, 0, 0, 0); // Setting initial time to 12:00 AM as default time
     }
     
-    while (startTime.getHours() !== 23 || startTime.getMinutes() !== 30) { //changed time here from 23 --> 24
+    while (startTime.getHours() !== 23 || startTime.getMinutes() !== 30) {
       const formattedTime = startTime.toLocaleTimeString('en-US', {
         hour: 'numeric',
         minute: '2-digit',
