@@ -41,6 +41,8 @@ const SignUp = () => {
         toast.success('OTP sent!');
         //save values to db
         saveCredsToDatabase(name, email, password);
+        //save values to users table
+        saveUserDetails(name, email);
         // Reset the form
         setName('');
         setEmail('');
@@ -61,6 +63,18 @@ const SignUp = () => {
     //storing values in db
     axios.post(`http://localhost:8080/api/user_registration/signup`, {name, email, password})
     .then((response) =>{
+      console.log(response.data);
+    })
+    .catch((error) => {
+      console.log(error);
+    })
+    
+  }
+
+  const saveUserDetails = (name, email) => {
+    //storing values in users table
+    axios.post(`http://localhost:8080/api/users/saveDetails`, {email, name})
+    .then((response) => {
       console.log(response.data);
     })
     .catch((error) => {

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Box, Typography, TextField, Button, Switch, MenuItem, InputLabel, Select} from '@mui/material';
+import { Box, Typography, TextField, Button, Switch, MenuItem, InputLabel, Select, Chip} from '@mui/material';
 import { DatePicker, LocalizationProvider } from '@mui/x-date-pickers';
 import { useNavigate, useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
@@ -8,6 +8,7 @@ import {AdapterDayjs} from '@mui/x-date-pickers/AdapterDayjs';
 import ArrowRightIcon from '@mui/icons-material/ArrowRight';
 import Navbar from './Navbar';
 import axios from 'axios';
+
 
 
 import './ProfilePage.css';
@@ -30,27 +31,62 @@ const ProfilePage = () => {
   const [isOnlineMeeting, setIsOnlineMeeting] = useState(false);
   const [repeatOption, setRepeatOption] = useState("Does Not Repeat");
   const [rooms, setRooms] = useState([]);
-
+  const [users, setUsers] = useState([]);
+  const [selectedAttendees, setSelectedAttendees] = useState([]);
+  const [loggedInUserEmail, setLoggedInUserEmail] = useState('');
+  const [filteredUserEmails, setFilteredUserEmails] = useState([]);
+  const [selectedAttendeesEmails, setSelectedAttendeesEmails] = useState([]);
 
   useEffect( () => {
     const fetchRooms = async () => {
       try{
         const response = await axios.get(`http://localhost:8080/api/rooms/get`);
         setRooms(response.data);
-        console.log(response.data);
       }
       catch(error){
         console.error('Error fetching data..', error);
       }
     }
 
+    const fetchUsers = async () => {
+      try{
+        const response = await axios.get(`http://localhost:8080/api/users/get`);
+        const filteredUsers = response.data.filter((user) => user.email !== loggedInUserEmail);
+        setUsers(filteredUsers);
+
+        // const filteredUserEmails = filteredUsers.map((user) => user.email);
+        const filteredUserEmails = filteredUsers.map((user) => ({
+          name: user.name,
+          email: user.email,
+        }));
+        setFilteredUserEmails(filteredUserEmails);
+        // console.log(filteredUserEmails);
+      }
+      catch(error){
+        console.error('Error fetching user data..', error);
+      }
+    }
+    //current loggedIn User Email fetching
+    const fetchLoggedInUser = async () => {
+      try{
+        const response = await axios.get(`http://localhost:8080/api/users/get/${name}`);
+        setLoggedInUserEmail(response.data.email);
+        // console.log(loggedInUserEmail);
+      }
+      catch(error){
+        console.error("Error fetching logged-in user email..", error);
+      }
+    }
+
     fetchRooms();
+    fetchUsers();
+    fetchLoggedInUser();
 
-
-  },[fromDate, toDate, fromTime, toTime]);
+    console.log(selectedAttendees)
+    // console.log(selectedAttendeesEmails)
+  },[fromDate, toDate, fromTime, toTime, name, loggedInUserEmail, selectedAttendees]);
 
   const getRoomStatus = (roomName) => {
-    console.log("calling function..");
     const room = rooms.find((room) => room.roomname === roomName);
 
     if(!room?.roomname){
@@ -77,7 +113,6 @@ const ProfilePage = () => {
     }
 
     else if(existingFromDate && existingFromTime && existingToDate && existingToTime){ 
-      console.log(`${existingFromDate} ${existingToDate} ${room.fromTime} ${room.toTime} ${requestedFromDate} ${requestedToDate} ${fromTime} ${toTime}`)
       //logic issue resolved
       const isOverLap =
           (
@@ -96,6 +131,19 @@ const ProfilePage = () => {
     return <b style={{color:'green'}}>Free</b>
   };
   
+  //to handle attendee selection
+  const handleAttendeeSelection = (e) => {
+    const selectedNames = e.target.value;
+    setSelectedAttendees(selectedNames);
+
+    const selectedEmails = selectedNames.map((name) => {
+      const user = filteredUserEmails.find((user) => user.name === name);
+      return user ? user.email : "";
+    });
+    setSelectedAttendeesEmails(selectedEmails);
+    
+
+  }
 
   const handleLocationChange = (e) => {
     setLocation(e.target.value);
@@ -185,17 +233,12 @@ const ProfilePage = () => {
   }
 
   const handleClick = async () => {
+
     if(fromDate && toDate && purpose && description){
       const formattedDate1 = dayjs(fromDate).format('DD/MM/YYYY');
       const formattedDate2 = dayjs(toDate).format('DD/MM/YYYY');
 
       const meetingType = isOnlineMeeting ? 'Online Meeting' : 'Offline Meeting';
-      console.log(fromTime)
-      console.log(toTime)
-      console.log(formattedDate1)
-      console.log(formattedDate2)
-      console.log(subLocation)
-
       const bookingData = {
         roomname: subLocation,
         fromDate : formattedDate1,
@@ -203,6 +246,20 @@ const ProfilePage = () => {
         fromTime : allDay ? null : fromTime,
         toTime : allDay ? null : toTime,
       };
+
+      const bookingDetails ={
+        recipients : [loggedInUserEmail, ...selectedAttendeesEmails],
+        purpose : purpose,
+        fromDate : formattedDate1,  //changed
+        toDate : formattedDate2,    //changed
+        fromTime : allDay ? "" : fromTime,
+        toTime : allDay ? "" : toTime,
+        subLocation : subLocation,
+        meetingType : meetingType,
+        repeatOption : repeatOption,
+        description : description,
+        allDay : allDay
+      }
 
       try{
         //post req
@@ -223,6 +280,20 @@ const ProfilePage = () => {
           }
         });
         toast.success('Booked!');
+        console.log(`${formattedDate1} ${formattedDate2}`)  //to check the format in which it is going to the backend
+        console.log(loggedInUserEmail);  //checking purpose
+        console.log(selectedAttendeesEmails);   //checking purpose
+
+        // to send booking details via email to multiple recipients
+        await axios.post(`http://localhost:8080/sendmail`, bookingDetails)
+        .then(response => {
+          toast.success('Booking Details sent via email');
+        })
+        .catch(error => {
+          toast.error('Error sending email', error);
+        })
+
+
       }
       catch(error){
         console.error('Error booking the room:', error);
@@ -232,7 +303,7 @@ const ProfilePage = () => {
     else{
       toast.warning('Please fill all the required details');
     }
-  }
+  };
 
   
 
@@ -357,6 +428,37 @@ const ProfilePage = () => {
             <MenuItem value="Weekly">Weekly</MenuItem>
             <MenuItem value="Monthly">Monthly</MenuItem>
           </TextField>
+          <span>          
+            {/* for required attendees feature */}
+            <TextField
+                select
+                label="Required Attendees"
+                value={selectedAttendees}
+                onChange={handleAttendeeSelection}
+                sx={{width:'55.6%', mt:'22px', ml:'30px'}}
+                SelectProps={{
+                  multiple: true,
+                  renderValue: (selected) => (
+                    
+                      <Box  maxHeight='80px' sx={{ display: 'flex', flexWrap: 'wrap' }}>
+                          {selected.map((value) => (
+                            <Chip key={value} size='small' label={value} style={{ marginRight: '5px',mt:'5px', height:'20px'}} />
+                          ))}
+                      </Box>
+                    
+
+                  ),
+                }}
+                variant="outlined"
+                size='small'
+              >
+                {users.map((user) => (
+                  <MenuItem key={user.email} value={user.name}>
+                    {user.name}
+                  </MenuItem>
+                ))}
+          </TextField>
+        </span>
           
           <div>
           <InputLabel size='normal' sx={{mt:1}} id="location-label">Location*</InputLabel>

@@ -5,7 +5,7 @@ import axios from 'axios';
 import { toast } from 'react-toastify';
 import Navbar from './Navbar';
 
-const BookingDetails = () => {
+const BookingDetails = () => {   //have to include the recipients in the code for the email triggering
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -26,36 +26,36 @@ const BookingDetails = () => {
   const [email, setEmail] = useState('');
   const [loading, setLoading] = useState(false);
 
-  const sendEmail = () => {
-    // Implement your logic to send the email
-    const bookingDetails = {
-        email : email,
-        purpose : purpose,
-        fromDate : fromDate,
-        toDate : toDate,
-        fromTime : allDay ? "" : fromTime,
-        toTime : allDay ? "" : toTime,
-        subLocation : subLocation,
-        meetingType : meetingType,
-        repeatOption : repeatOption,
-        description : description,
-        allDay : allDay
-    }
+  // const sendEmail = () => {
+  //   // Implementing logic to send the email
+  //   const bookingDetails = {
+  //       email : email,
+  //       purpose : purpose,
+  //       fromDate : fromDate,
+  //       toDate : toDate,
+  //       fromTime : allDay ? "" : fromTime,
+  //       toTime : allDay ? "" : toTime,
+  //       subLocation : subLocation,
+  //       meetingType : meetingType,
+  //       repeatOption : repeatOption,
+  //       description : description,
+  //       allDay : allDay
+  //   }
     
-    setLoading(true);
+  //   setLoading(true);
 
-    axios.post(`http://localhost:8080/sendmail`, bookingDetails)
-    .then(response => {
-        setLoading(false)
-        toast.success('Email has been sent');
-        setEmail('')
-    })
-    .catch(error => {
-        setLoading(false);
-        toast.error('Error sending email', error);
-        setEmail('');
-    })
-  };
+  //   axios.post(`http://localhost:8080/sendmail`, bookingDetails)
+  //   .then(response => {
+  //       setLoading(false)
+  //       toast.success('Email has been sent');
+  //       setEmail('')
+  //   })
+  //   .catch(error => {
+  //       setLoading(false);
+  //       toast.error('Error sending email', error);
+  //       setEmail('');
+  //   })
+  // };
 
   return (
     <div>
@@ -152,7 +152,7 @@ const BookingDetails = () => {
           </Grid>
         </Grid>
       </Paper>
-      <div style={{ display: 'flex', justifyContent: 'center', flexDirection:'row' }}>
+      {/* <div style={{ display: 'flex', justifyContent: 'center', flexDirection:'row' }}>
                  <TextField 
                     autoComplete='off' variant='outlined' 
                      label='Enter email' value={email} onChange={e => setEmail(e.target.value)} 
@@ -167,7 +167,7 @@ const BookingDetails = () => {
                      sx={{mr:40,mt:2.5, borderRadius:'30px', color:'white'}}>
                      {loading ? <CircularProgress color='inherit' size={24}/> : 'Send Email'}
                  </Button>
-             </div>
+             </div> */}
     </Box>
     </div>
   );
