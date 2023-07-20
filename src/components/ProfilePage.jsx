@@ -54,13 +54,11 @@ const ProfilePage = () => {
         const filteredUsers = response.data.filter((user) => user.email !== loggedInUserEmail);
         setUsers(filteredUsers);
 
-        // const filteredUserEmails = filteredUsers.map((user) => user.email);
         const filteredUserEmails = filteredUsers.map((user) => ({
           name: user.name,
           email: user.email,
         }));
         setFilteredUserEmails(filteredUserEmails);
-        // console.log(filteredUserEmails);
       }
       catch(error){
         console.error('Error fetching user data..', error);
@@ -71,7 +69,6 @@ const ProfilePage = () => {
       try{
         const response = await axios.get(`http://localhost:8080/api/users/get/${name}`);
         setLoggedInUserEmail(response.data.email);
-        // console.log(loggedInUserEmail);
       }
       catch(error){
         console.error("Error fetching logged-in user email..", error);
@@ -82,8 +79,6 @@ const ProfilePage = () => {
     fetchUsers();
     fetchLoggedInUser();
 
-    console.log(selectedAttendees)
-    // console.log(selectedAttendeesEmails)
   },[fromDate, toDate, fromTime, toTime, name, loggedInUserEmail, selectedAttendees]);
 
   const getRoomStatus = (roomName) => {
@@ -91,7 +86,6 @@ const ProfilePage = () => {
 
     if(!room?.roomname){
       return <b style={{color:'green'}}>Free</b>
-      // return 'Free'
     }
 
     const existingFromDate = dayjs(room.fromDate).format('DD/MM/YYYY');
@@ -316,6 +310,7 @@ const ProfilePage = () => {
           <Typography variant="h4" component="h1" align="center" sx={{ marginBottom: 3 }}>
             New Booking
           </Typography>
+          
 
           <TextField 
             size='small'
@@ -420,7 +415,6 @@ const ProfilePage = () => {
             size='small'
             color="info"
             sx={{ width: '40%', marginRight: 1, mt:2 }}
-            // InputLabelProps={{ shrink: true }}
           >
             <MenuItem value="Does Not Repeat">Does not repeat</MenuItem>
             <MenuItem value="Every Weekday">Every Weekday(Mon - Fri)</MenuItem>
@@ -487,7 +481,6 @@ const ProfilePage = () => {
                 variant="standard"
                 size="small"
                 sx={{ width: '35%', marginLeft: -1}}
-                // InputLabelProps={{ shrink: true }}
               >
                 
                 <MenuItem value="Level 1 - Workstation 1 (Seats 5)" >
@@ -542,7 +535,6 @@ const ProfilePage = () => {
                 variant="standard"
                 size="small"
                 sx={{ width: '35%', marginLeft: -1}}
-                // InputLabelProps={{ shrink: true }}
               >
                 <MenuItem value="Level 2 - Boardroom 1 (Seats 10)">
                 <b style={{marginRight:4}}>
@@ -584,7 +576,6 @@ const ProfilePage = () => {
                 variant="standard"
                 size="small"
                 sx={{ width: '30%', marginLeft: -1 }}
-                // InputLabelProps={{ shrink: true }}
               >
                 <MenuItem value="Cabins - Seat 1" sx={{ml:1}}>
                 <b style={{marginRight:10}}>
