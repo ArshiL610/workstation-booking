@@ -79,7 +79,48 @@ const ProfilePage = () => {
     fetchUsers();
     fetchLoggedInUser();
 
+    if (fromDate && !fromTime) {
+      const currentDate = new Date();
+      if (dayjs(fromDate).isSame(currentDate, 'day')) {
+        const currentMinutes = currentDate.getMinutes();
+        const roundedMinutes = Math.ceil(currentMinutes / 30) * 30;
+        currentDate.setMinutes(roundedMinutes);
+
+        const formattedFromTime = currentDate.toLocaleTimeString('en-US', {
+          hour: 'numeric',
+          minute: '2-digit',
+          hour12: true,
+        });
+
+        setFromTime(formattedFromTime);
+      }
+    }
+
+    // Set the initial value of toTime based on the selected toDate
+    if (toDate && !toTime) {
+      const currentDate = new Date();
+      if (dayjs(toDate).isSame(currentDate, 'day')) {
+        const currentMinutes = currentDate.getMinutes();
+        const roundedMinutes = Math.ceil(currentMinutes / 30) * 30;
+        currentDate.setMinutes(roundedMinutes);
+
+        const formattedToTime = currentDate.toLocaleTimeString('en-US', {
+          hour: 'numeric',
+          minute: '2-digit',
+          hour12: true,
+        });
+
+        setToTime(formattedToTime);
+      }
+    }
+
   },[fromDate, toDate, fromTime, toTime, name, loggedInUserEmail, selectedAttendees]);
+  
+  //to disable the previous dates from the current date
+  const shouldDisableDate = (date) => {
+    const now = dayjs().startOf('day');
+    return date.isBefore(now);
+  };
 
   const getRoomStatus = (roomName) => {
     const room = rooms.find((room) => room.roomname === roomName);
@@ -97,7 +138,6 @@ const ProfilePage = () => {
     const requestedToDate = dayjs(toDate).format('DD/MM/YYYY');
 
     if(allDay) {
-
       if (requestedFromDate >= existingFromDate && requestedToDate <= existingToDate){
         return <b style={{color:'red'}}>Busy</b>
       }
@@ -176,18 +216,53 @@ const ProfilePage = () => {
       });
   
       setToTime(formattedTime);
+      
     }
     else {
       setToTime(null); // Set to null when either selectedTime or fromDate is null
     }
+
   };
   
 
   const handleToTimeChange = (e) => {
-    setToTime(e.target.value);
+    const selectedToTime = e.target.value;
+    setToTime(selectedToTime);
+
+    if(selectedToTime && toDate){
+      const [hours, minutes, period] = selectedToTime.split(/[: ]/);
+      let hoursToAdd = Number(hours);
+      let minutesToAdd = Number(minutes) + 30;
+
+      if(period === 'PM' && hours !== '12'){
+        hoursToAdd += 12;
+      }
+
+      if(minutesToAdd >= 60){
+        hoursToAdd += Math.floor(minutesToAdd / 60);
+        minutesToAdd = minutesToAdd % 60;
+      }
+
+      const nextTime = new Date(toDate);
+      nextTime.setHours(hoursToAdd, minutesToAdd);
+
+      const formattedToTime = nextTime.toLocaleTimeString('en-US', {
+        hour : 'numeric',
+        minute : '2-digit',
+        hour12 : true,
+      });
+
+      setToTime(formattedToTime);
+      
+    }
+    else{
+      setToTime(null);    //set to null when either selectedToTime or toDate is null
+    }
+
+
   };
   
-
+  //from time options
   const generateTimeOptions = () => {
     const options = [];
     const startTime = new Date();
@@ -211,10 +286,41 @@ const ProfilePage = () => {
       options.push({ label: formattedTime, value: formattedTime });
   
       startTime.setMinutes(startTime.getMinutes() + 30); // Incrementing time by 30 minutes
+      
     }
-  
+
     return options;
   };
+
+  // Function to generate default time options with 30-minute intervals
+  const generateDefaultToTimeOptions = () => {
+    const options = [];
+    const startTime = new Date();
+    startTime.setSeconds(0, 0); // Setting initial time to nearest time interval
+
+    if(dayjs(startTime).isSame(toDate, 'day')){
+      const currentMinutes = startTime.getMinutes();
+      const roundedMinutes = Math.ceil(currentMinutes / 30) * 30;
+      startTime.setMinutes(roundedMinutes); //////
+    }
+    else{
+      startTime.setHours(0,0,0,0);
+    }
+
+    while (startTime.getHours() !== 23 || startTime.getMinutes() !== 30) {
+      const formattedTime = startTime.toLocaleTimeString('en-US', {
+        hour: 'numeric',
+        minute: '2-digit',
+        hour12: true,
+      });
+      options.push({ label: formattedTime, value: formattedTime });
+
+      startTime.setMinutes(startTime.getMinutes() + 30); // Incrementing time by 30 minutes
+    }
+
+
+  return options;
+};
   
 
   //to check if All Day switch is checked or not
@@ -239,7 +345,21 @@ const ProfilePage = () => {
         toDate : formattedDate2,
         fromTime : allDay ? null : fromTime,
         toTime : allDay ? null : toTime,
+        email : loggedInUserEmail
       };
+
+      const bookingDetailsData = {
+        purpose : purpose,
+        fromDate : formattedDate1,
+        toDate : formattedDate2,
+        fromTime : allDay ? null : fromTime,
+        toTime : allDay ? null : toTime,
+        email : loggedInUserEmail,
+        location : subLocation,
+        meetingType : meetingType,
+        repeatOption : repeatOption,
+        description : description
+      }
 
       const bookingDetails ={
         recipients : [loggedInUserEmail, ...selectedAttendeesEmails],
@@ -252,12 +372,14 @@ const ProfilePage = () => {
         meetingType : meetingType,
         repeatOption : repeatOption,
         description : description,
-        allDay : allDay
+        allDay : allDay,
+       
       }
 
       try{
-        //post req
+        //post req to populate rooms table
         await axios.post(`http://localhost:8080/api/rooms/post`, bookingData);
+          
         navigate("/bookingdetails",{
           state : {
             fromDate: formattedDate1,
@@ -277,6 +399,15 @@ const ProfilePage = () => {
         console.log(`${formattedDate1} ${formattedDate2}`)  //to check the format in which it is going to the backend
         console.log(loggedInUserEmail);  //checking purpose
         console.log(selectedAttendeesEmails);   //checking purpose
+
+        // post req to populate bookingDetails table
+        await axios.post(`http:///localhost:8080/api/bookingdetails/post`, bookingDetailsData)
+        .then(response => {
+          toast.success("Details sent to the server successfully");
+        })
+        .catch(error=> {
+          toast.error("Error sending details to the server..", error)
+        });
 
         // to send booking details via email to multiple recipients
         await axios.post(`http://localhost:8080/sendmail`, bookingDetails)
@@ -330,6 +461,7 @@ const ProfilePage = () => {
             value={fromDate}
             onChange={(date) => setFromDate(date)}
             slotProps={{ textField: { variant: 'outlined', size:'small', color:'info' } }}
+            shouldDisableDate={shouldDisableDate}
             required
           />
           <span>
@@ -363,6 +495,7 @@ const ProfilePage = () => {
             value={toDate}
             onChange={(date) => setToDate(date)}
             slotProps={{ textField: { variant: 'outlined', size:'small' } }}
+            shouldDisableDate={(date) => shouldDisableDate(date) || date.isBefore(fromDate)} // Disable previous dates and dates before fromDate
             required
           />
 
@@ -381,7 +514,7 @@ const ProfilePage = () => {
             sx={{ ml: 2 }}
             InputLabelProps={{ shrink: true }}
           >
-            {generateTimeOptions().map((option) => (
+            {generateDefaultToTimeOptions().map((option) => (
               <option key={option.value} value={option.value}>
                 {option.label}
               </option>
@@ -440,7 +573,6 @@ const ProfilePage = () => {
                           ))}
                       </Box>
                     
-
                   ),
                 }}
                 variant="outlined"
@@ -475,6 +607,7 @@ const ProfilePage = () => {
             
             {location === 'level1' && (
               <Select
+              required
                 label="Sub Location"
                 value={subLocation}
                 onChange={handleSubLocationChange}
@@ -529,6 +662,7 @@ const ProfilePage = () => {
             )}
             {location === 'level2' && (
               <Select
+              required
                 label="Sub Location"
                 value={subLocation}
                 onChange={handleSubLocationChange}
@@ -570,6 +704,7 @@ const ProfilePage = () => {
             )}
             {location === 'cabins' && (
               <Select
+              required
                 label="Sub Location"
                 value={subLocation}
                 onChange={handleSubLocationChange}

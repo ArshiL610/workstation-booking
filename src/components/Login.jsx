@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react'
+import React, {useState} from 'react'
 import { TextField, Button, CircularProgress} from "@mui/material";
 import {Link, useNavigate} from "react-router-dom";
 import axios from 'axios';
@@ -47,7 +47,8 @@ const Login = () => {
               setLoading(false);
               console.log(response.data);
               toast.success('Login Successful');
-              navigate(`/profilepage/${response.data.name}`);
+              // navigate(`/profilepage/${response.data.name}`);
+              navigate(`/homepage/${response.data.name}`);
             }, 1000);
             
           })

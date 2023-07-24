@@ -4,6 +4,7 @@ import { Box, Button, Grid, Paper, TextField, Typography, CircularProgress } fro
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import Navbar from './Navbar';
+import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 
 const BookingDetails = () => {   //have to include the recipients in the code for the email triggering
   const location = useLocation();
@@ -25,6 +26,10 @@ const BookingDetails = () => {   //have to include the recipients in the code fo
 
   const [email, setEmail] = useState('');
   const [loading, setLoading] = useState(false);
+
+  const handleHomePageNavigation = () => {
+    navigate(`/homepage/${name}`);
+  }
 
   // const sendEmail = () => {
   //   // Implementing logic to send the email
@@ -79,7 +84,7 @@ const BookingDetails = () => {   //have to include the recipients in the code fo
           maxWidth: '500px',
           width: '800px',
           height:'320px',
-          mt:-6
+          mt:-7
         }}
       >
         <Typography variant="h4" align="center" sx={{ mt:-2, mb:2 }}>
@@ -168,6 +173,10 @@ const BookingDetails = () => {   //have to include the recipients in the code fo
                      {loading ? <CircularProgress color='inherit' size={24}/> : 'Send Email'}
                  </Button>
              </div> */}
+      <Button variant='contained' size='medium' color='inherit' sx={{mt:4}} onClick={handleHomePageNavigation}>
+        <strong>View Bookings</strong>
+        <ArrowForwardIcon style={{fontSize:'20px', marginLeft:4, marginRight:-6}} />
+      </Button>
     </Box>
     </div>
   );
