@@ -1,10 +1,11 @@
 import React, {useState} from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { Box, Button, Grid, Paper, TextField, Typography, CircularProgress } from '@mui/material';
+import { Box, Button, Grid, Paper, TextField, Typography, CircularProgress, IconButton } from '@mui/material';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import Navbar from './Navbar';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
+import ForwardRoundedIcon from '@mui/icons-material/ForwardRounded';
 
 const BookingDetails = () => {   //have to include the recipients in the code for the email triggering
   const location = useLocation();
@@ -62,6 +63,10 @@ const BookingDetails = () => {   //have to include the recipients in the code fo
   //   })
   // };
 
+  const handleBackwardNavigation = () => {
+    navigate(`/profilepage/${name}`);
+  }
+
   return (
     <div>
       <Navbar name={name}/>
@@ -76,7 +81,9 @@ const BookingDetails = () => {   //have to include the recipients in the code fo
         height: '100vh'
       }}
     >
-      
+      <IconButton variant='contained' size='large' sx={{color:'black', mt:-11, mr:147}} onClick={handleBackwardNavigation}>
+                <ForwardRoundedIcon style={{fontSize:'40px', transform: 'rotate(-180deg)'}} />
+      </IconButton>
       <Paper
         elevation={6}
         sx={{

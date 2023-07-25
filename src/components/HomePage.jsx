@@ -9,9 +9,10 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-import { Button } from '@mui/material';
+import { Button, IconButton } from '@mui/material';
 import { useNavigate, useParams } from 'react-router-dom';
-import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
+import SendIcon from '@mui/icons-material/Send';
+import ForwardRoundedIcon from '@mui/icons-material/ForwardRounded';
 
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
@@ -50,8 +51,6 @@ const HomePage = () => {
                 const response = await axios.get(`http://localhost:8080/api/users/get/${name}`);
                 const userMail = response.data.email;
                 setUserEmail(userMail);
-                console.log(userMail)
-                
 
                 const response1 = await axios.get(`http://localhost:8080/api/bookingdetails/get`);
                 setBookingDetailsList(response1.data);
@@ -63,7 +62,7 @@ const HomePage = () => {
         };
 
         fetchUserData();
-    },[name, userEmail]);
+    },[name]);
 
     // Filter the bookings based on the user's email
     const filteredBookings = bookingDetailsList.filter((booking) => booking.email === userEmail);
@@ -82,15 +81,31 @@ const HomePage = () => {
         navigate(`/profilepage/${name}`)
     }
 
+    const handleForwardNavigation = () => {
+        navigate(`/profilepage/${name}`)
+    }
+
 return(
     <div>
         <Navbar name={name} />
-        <Button size='large' variant='contained' color='inherit' sx={{ml:65, mt:5, fontSize:'25px'}} onClick={handleProfilePageNavigation}>
-            New Booking
-            <ArrowForwardIcon style={{marginLeft:'10px', fontSize:'25px' }} />
-        </Button>
-        <h2 style={{marginLeft:41, marginTop:10, fontSize:'25px'}}><i>Bookings</i></h2>
-        <TableContainer component={Paper} sx={{ml:5,width:1220, mt:-2.5, maxHeight: '373px', overflowY:'inherit'}} >
+        {/* forward arrow */}
+        <IconButton variant='contained' size='large' sx={{color:'black', ml:'1170px', mt:1}} onClick={handleForwardNavigation}>
+            <ForwardRoundedIcon style={{fontSize:'40px'}} />
+        </IconButton>
+        {/* backward arrow */}
+        {/* <span>
+            <IconButton variant='contained' size='large' sx={{color:'black', mt:-11, ml:2}}>
+                <ForwardRoundedIcon style={{fontSize:'40px', transform: 'rotate(-180deg)'}} />
+            </IconButton>
+        </span> */}
+        <span>
+            <Button size='large' variant='contained' color='inherit' sx={{ml:65, mt:-5, fontSize:'25px', alignItems:'center'}} onClick={handleProfilePageNavigation}>
+                New Booking
+                <SendIcon style={{marginLeft:'10px', fontSize:'25px' }} />
+            </Button>
+        </span>
+        <h2 style={{marginLeft:33, marginTop:10, fontSize:'25px'}}><i>Bookings</i></h2>
+        <TableContainer component={Paper} sx={{ml:4,width:1217, mt:-2.5, maxHeight: '373px', overflowY:'auto'}} >
             <Table stickyHeader  sx={{width: 1200 }} aria-label="customized table">
             <TableHead>
             <TableRow>

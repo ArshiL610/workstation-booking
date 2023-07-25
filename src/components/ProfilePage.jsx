@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Box, Typography, TextField, Button, Switch, MenuItem, InputLabel, Select, Chip} from '@mui/material';
+import { Box, Typography, TextField, Button, Switch, MenuItem, InputLabel, Select, Chip, IconButton} from '@mui/material';
 import { DatePicker, LocalizationProvider } from '@mui/x-date-pickers';
 import { useNavigate, useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
@@ -8,7 +8,7 @@ import {AdapterDayjs} from '@mui/x-date-pickers/AdapterDayjs';
 import ArrowRightIcon from '@mui/icons-material/ArrowRight';
 import Navbar from './Navbar';
 import axios from 'axios';
-
+import ForwardRoundedIcon from '@mui/icons-material/ForwardRounded';
 
 
 import './ProfilePage.css';
@@ -122,6 +122,7 @@ const ProfilePage = () => {
     return date.isBefore(now);
   };
 
+  // to get the status of the room, free or busy
   const getRoomStatus = (roomName) => {
     const room = rooms.find((room) => room.roomname === roomName);
 
@@ -156,7 +157,6 @@ const ProfilePage = () => {
           )          
 
       if(isOverLap){
-        console.log('we are on track..');
         return <b style={{color:'red'}}>Busy</b>
       }
     }
@@ -430,13 +430,22 @@ const ProfilePage = () => {
     }
   };
 
+  const handleBackwardNavigation = () => {
+    navigate(`/homepage/${name}`);
+  }
+
   
 
 
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs} > 
     <Navbar name={name} />
-      <div className="profile-page" style={{overFlowY:'auto', marginTop:'-35px'}} >
+    <div>
+      <IconButton variant='contained' size='large' sx={{color:'black', ml:2, mt:1}} onClick={handleBackwardNavigation}>
+              <ForwardRoundedIcon style={{fontSize:'40px', transform: 'rotate(-180deg)'}} />
+      </IconButton>
+    </div>
+      <div className="profile-page" style={{overFlowY:'auto', marginTop:'-105px'}} >
         <Box className="container">
           <Typography variant="h4" component="h1" align="center" sx={{ marginBottom: 3 }}>
             New Booking
