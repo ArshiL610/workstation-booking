@@ -27,6 +27,15 @@ const BookingDetails = () => {   //have to include the recipients in the code fo
 
   const [email, setEmail] = useState('');
   const [loading, setLoading] = useState(false);
+  // // Check if the user is logged in (you can use your own logic here)
+  // const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+
+  // // If the user is not logged in, redirect to the login page
+  // if (!isLoggedIn) {
+  //     navigate('/login');
+  //     // toast.warning("Login again!!");
+  //     console.log("login plss"); // You can return null or a loading message here if needed
+  // }
 
   const handleHomePageNavigation = () => {
     navigate(`/homepage/${name}`);

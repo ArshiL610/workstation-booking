@@ -13,6 +13,7 @@ const Login = () => {
     //for cursor loading
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
+    const [loggedIn, setLoggedIn] = useState(false);
 
 
     // useEffect(() =>{
@@ -35,7 +36,8 @@ const Login = () => {
             saveCredentialsToDatabase(email, password);
             console.log(`Email: ${email}\nPassword: ${password}`);
             // setIsAuth(true);
-  
+            
+              
         }
     };
 
@@ -48,6 +50,8 @@ const Login = () => {
               console.log(response.data);
               toast.success('Login Successful');
               // navigate(`/profilepage/${response.data.name}`);
+              // localStorage.setItem('isLoggedIn', 'true');
+              // setLoggedIn(true);
               navigate(`/homepage/${response.data.name}`);
             }, 1000);
             
@@ -61,6 +65,7 @@ const Login = () => {
           setEmail('');
           setPassword('');
     }
+
 
 
     return (

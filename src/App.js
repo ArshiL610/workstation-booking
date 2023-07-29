@@ -73,6 +73,7 @@ function App() {
         <Route path="/resetpassword/:email" element={<ResetPassword />} />
         <Route path="/helpdesk" element={<HelpDesk />} />
         <Route path="/about" element={<About />} />
+
         <Route path="/login" element={<Login  />} />
         <Route path="/homepage/:name" element={<HomePage />} />
         <Route path="/profilepage/:name" element={<ProfilePage />} />
@@ -80,7 +81,6 @@ function App() {
         
       </Routes>
 
-      {/* <HomePage /> */}
       
       
     

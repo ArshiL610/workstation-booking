@@ -1,9 +1,12 @@
-import { Box, Button, TextField, Typography, CircularProgress } from '@mui/material';
+import { Box, Button, TextField, IconButton, Typography, CircularProgress } from '@mui/material';
 import axios from 'axios';
 import React, {useState} from 'react'
 import { useParams, useNavigate } from 'react-router-dom';
 import { toast} from 'react-toastify';
 import Navbar from './Navbar';
+import ForwardRoundedIcon from '@mui/icons-material/ForwardRounded';
+
+
 
 const ResetPassword = () => {
 
@@ -42,15 +45,20 @@ const ResetPassword = () => {
             }
             else{
                 setLoading(false);
-                toast.warning('Enter the correct password !!')
-                console.log("Passwords do not match");
-                
+                toast.warning('Passwords do not match!!')
             }
         };
+
+    const handleBackwardNavigation = () => {
+        navigate(`/resetverify/:email`);
+    }
 
     return(
         <form autoComplete='off'>
             <Navbar />
+            <IconButton variant='contained' size='large' sx={{color:'black', mt:3, ml:2}} onClick={handleBackwardNavigation}>
+                <ForwardRoundedIcon style={{fontSize:'40px', transform: 'rotate(-180deg)'}} />
+            </IconButton>
             <Box
                 sx={{
                     display: 'flex',
@@ -60,7 +68,7 @@ const ResetPassword = () => {
                     margin: '0 auto',
                 }}
             >
-                <Typography variant='h4' align='center' gutterBottom><br/>
+                <Typography sx={{mt:-7}} variant='h4' align='center' gutterBottom><br/>
                     <strong>Reset Your Password</strong>
                 </Typography>
                 <TextField

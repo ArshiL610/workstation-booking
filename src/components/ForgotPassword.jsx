@@ -1,9 +1,10 @@
-import { Box, Button, TextField, Typography, CircularProgress} from '@mui/material';
+import { Box, Button, TextField, Typography, IconButton, CircularProgress} from '@mui/material';
 import axios from 'axios';
 import React, {useState} from 'react'
 import {useNavigate } from 'react-router-dom';
 import { toast} from 'react-toastify';
 import Navbar from './Navbar';
+import ForwardRoundedIcon from '@mui/icons-material/ForwardRounded';
 
 const ForgotPassword = () => {
 
@@ -34,10 +35,17 @@ const ForgotPassword = () => {
         })
     };
 
+    const handleBackwardNavigation = () => {
+        navigate(`/login`);
+      }
+
     return(
          
         <form autoComplete='off' onSubmit={handleClick}>
             <Navbar />
+            <IconButton variant='contained' size='large' sx={{color:'black', mt:3, ml:4}} onClick={handleBackwardNavigation}>
+                <ForwardRoundedIcon style={{fontSize:'40px', transform: 'rotate(-180deg)'}} />
+            </IconButton>
             <Box
                 sx={{
                     display: 'flex',
@@ -47,7 +55,7 @@ const ForgotPassword = () => {
                     margin: '0 auto',
                     }}
             >
-                <Typography variant="h4" align="center" gutterBottom>
+                <Typography variant="h4" align="center" gutterBottom sx={{mt:-9}}>
                     <br/>
                     <strong>Password Reset</strong>
                 </Typography>

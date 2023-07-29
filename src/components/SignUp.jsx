@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
-import { TextField, Button, Box, Typography, CircularProgress } from '@mui/material';
+import { TextField, Button, Box, Typography, IconButton, CircularProgress } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { toast} from 'react-toastify';
 import Navbar from './Navbar';
+import ForwardRoundedIcon from '@mui/icons-material/ForwardRounded';
+
 
 
 const SignUp = () => {
@@ -31,7 +33,7 @@ const SignUp = () => {
         toast.warning('Please Enter Your Email');
     }
     else if(!password){
-        toast.warning('Please Enter Your DOB');
+        toast.warning('Please Enter Your Password');
     }
     else{
       try{
@@ -80,12 +82,19 @@ const SignUp = () => {
     .catch((error) => {
       console.log(error);
     })
+  };
+
+  const handleBackwardNavigation = () => {
+    navigate(`/login`);
   }
 
 
   return (
     <form autoComplete='off' onSubmit={handleSignUp}>
       <Navbar />
+      <IconButton variant='contained' size='large' sx={{color:'black', mt:3, ml:3}} onClick={handleBackwardNavigation}>
+          <ForwardRoundedIcon style={{fontSize:'40px', transform: 'rotate(-180deg)'}} />
+      </IconButton>
       <Box
         sx={{
           display: 'flex',
@@ -95,7 +104,7 @@ const SignUp = () => {
           margin: '0 auto',
         }}
       >
-        <Typography variant="h4" align="center" gutterBottom><br/>
+        <Typography sx={{mt:-8}} variant="h4" align="center" gutterBottom><br/>
           Sign Up
         </Typography>
         <TextField

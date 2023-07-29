@@ -11,8 +11,10 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import { Button, IconButton } from '@mui/material';
 import { useNavigate, useParams } from 'react-router-dom';
-import SendIcon from '@mui/icons-material/Send';
 import ForwardRoundedIcon from '@mui/icons-material/ForwardRounded';
+import DeleteRoundedIcon from '@mui/icons-material/DeleteRounded';
+import AddIcon from '@mui/icons-material/Add';
+import RefreshIcon from '@mui/icons-material/Refresh';
 
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
@@ -45,6 +47,16 @@ const HomePage = () => {
     const [userEmail, setUserEmail] = useState('');
 
     useEffect(() => {
+
+        // Check if the user is logged in (you can use your own logic here)
+        // const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+
+        // If the user is not logged in, redirect to the login page
+        // if (!isLoggedIn) {
+        //     navigate('/login');
+        //     // toast.warning("Login again!!");
+        //     console.log("login plss"); // You can return null or a loading message here if needed
+        // }
 
         const fetchUserData = async () => {
             try{
@@ -85,13 +97,21 @@ const HomePage = () => {
         navigate(`/profilepage/${name}`)
     }
 
+    const handleRefresh = () => {
+        window.location.reload();
+      };
+      
+
+
 return(
     <div>
         <Navbar name={name} />
         {/* forward arrow */}
         <IconButton variant='contained' size='large' sx={{color:'black', ml:'1170px', mt:1}} onClick={handleForwardNavigation}>
             <ForwardRoundedIcon style={{fontSize:'40px'}} />
-        </IconButton>
+        </IconButton>        
+    
+        
         {/* backward arrow */}
         {/* <span>
             <IconButton variant='contained' size='large' sx={{color:'black', mt:-11, ml:2}}>
@@ -101,11 +121,16 @@ return(
         <span>
             <Button size='large' variant='contained' color='inherit' sx={{ml:65, mt:-5, fontSize:'25px', alignItems:'center'}} onClick={handleProfilePageNavigation}>
                 New Booking
-                <SendIcon style={{marginLeft:'10px', fontSize:'25px' }} />
+                <AddIcon style={{marginLeft:'5px', fontSize:'35px', marginRight:-10 }} />
             </Button>
         </span>
-        <h2 style={{marginLeft:33, marginTop:10, fontSize:'25px'}}><i>Bookings</i></h2>
-        <TableContainer component={Paper} sx={{ml:4,width:1217, mt:-2.5, maxHeight: '373px', overflowY:'auto'}} >
+        <h2 style={{marginLeft:33, marginTop:11, fontSize:'25px'}}><i>Bookings</i></h2>
+        <IconButton sx={{mt:-12, ml:'1176px', color:'black'}} onClick={handleRefresh}>
+            <RefreshIcon sx={{fontSize:'30px'}}/>
+        </IconButton>
+        
+        
+        <TableContainer component={Paper} sx={{ml:4,width:1217, mt:-4.5, maxHeight: '380px'}} >
             <Table stickyHeader  sx={{width: 1200 }} aria-label="customized table">
             <TableHead>
             <TableRow>
@@ -118,10 +143,10 @@ return(
                 <StyledTableCell sx={{fontSize:'15px'}} align='left'><strong>Location</strong></StyledTableCell>
                 <StyledTableCell sx={{fontSize:'15px'}}><strong>Repeat</strong></StyledTableCell>
                 <StyledTableCell sx={{fontSize:'15px'}}><strong>Meeting Type</strong></StyledTableCell>
-                <StyledTableCell sx={{fontSize:'15px'}}><strong>Action</strong></StyledTableCell>
+                <StyledTableCell sx={{fontSize:'15px'}} align='center'><strong>Action</strong></StyledTableCell>
             </TableRow>
             </TableHead>
-            <TableBody sx={{maxHeight: 'calc(100vh - 400px)', overflow:'auto'}}>
+            <TableBody sx={{maxHeight: 'calc(100vh - 400px)', overflowY:'auto'}}>
             {filteredBookings.map((booking) => (
                 <StyledTableRow key={booking.id}>
                     <StyledTableCell align='left'><strong>{booking.id}</strong></StyledTableCell>
@@ -133,8 +158,10 @@ return(
                     <StyledTableCell align='left'><strong>{booking.location}</strong></StyledTableCell>
                     <StyledTableCell align='left'><strong>{booking.repeatOption}</strong></StyledTableCell>
                     <StyledTableCell align='left'><strong>{booking.meetingType}</strong></StyledTableCell>
-                    <StyledTableCell align='left'>
-                        <Button size='small' variant='contained' color='warning' onClick={() => handleDelete(booking.id)}>Delete</Button>
+                    <StyledTableCell align='center'>
+                        <IconButton size='small' variant='contained'  color='inherit' onClick={() => handleDelete(booking.id)}>
+                            <DeleteRoundedIcon sx={{fontSize:'25px'}}/>
+                        </IconButton>
                     </StyledTableCell>
                 </StyledTableRow>
             ))}

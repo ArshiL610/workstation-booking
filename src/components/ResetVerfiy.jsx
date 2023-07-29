@@ -1,9 +1,10 @@
-import { Box, Button, TextField, Typography, CircularProgress } from '@mui/material';
+import { Box, Button, TextField, IconButton, Typography, CircularProgress } from '@mui/material';
 import axios from 'axios';
 import React, {useState} from 'react'
 import { useNavigate, useParams } from 'react-router-dom';
 import { toast} from 'react-toastify';
 import Navbar from './Navbar';
+import ForwardRoundedIcon from '@mui/icons-material/ForwardRounded';
 
 
 const ResetVerify = () => {
@@ -49,10 +50,17 @@ const ResetVerify = () => {
         })
     }
 
+    const handleBackwardNavigation = () => {
+        navigate(`/forgot-password`);
+    }
+
 
     return(
         <form autoComplete='off'>
             <Navbar />
+            <IconButton variant='contained' size='large' sx={{color:'black', mt:3, ml:2}} onClick={handleBackwardNavigation}>
+                <ForwardRoundedIcon style={{fontSize:'40px', transform: 'rotate(-180deg)'}} />
+            </IconButton>
             <Box
                 sx={{
                 display: 'flex',
@@ -62,7 +70,7 @@ const ResetVerify = () => {
                 margin: '0 auto',
                 }}
             >
-                <Typography variant="h4" align="center" gutterBottom><br/>
+                <Typography variant="h4" align="center" gutterBottom sx={{mt:-8}}><br/>
                     <strong>OTP Verification</strong>
                 </Typography>
                 

@@ -1,17 +1,26 @@
-import { Box, Typography } from '@mui/material'
+import { Box, Typography, IconButton } from '@mui/material'
 import React from 'react'
 import Container from '@mui/material/Container';
 import Navbar from './Navbar';
-
-
+import ForwardRoundedIcon from '@mui/icons-material/ForwardRounded';
+import { useNavigate } from 'react-router-dom';
 
 
 const About = () => {
 
+  const navigate = useNavigate();
+
+  const handleGoBack = () =>{
+    navigate(-1);
+  }
+
 return(
   <div>
     <Navbar />
-    <Container maxWidth="lg" sx={{backgroundColor:'brightgray',  overflowY: 'auto', maxHeight: '90vh' }}>
+    <IconButton variant='contained' size='large' sx={{color:'black', mt:3, ml:4}} onClick={handleGoBack}>
+        <ForwardRoundedIcon style={{fontSize:'40px', transform: 'rotate(-180deg)'}} />
+    </IconButton>
+    <Container maxWidth="lg" sx={{backgroundColor:'brightgray',  overflowY: 'auto', maxHeight: '90vh', mt:-11 }}>
       
         <Box 
             sx={{

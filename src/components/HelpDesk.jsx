@@ -1,8 +1,11 @@
 import React, {useState} from 'react';
-import { TextField, Button, Stack, Snackbar } from '@mui/material';
+import { TextField, IconButton, Button, Stack, Snackbar } from '@mui/material';
 import { Link } from "react-router-dom"
 import Alert from '@mui/material/Alert';
 import Navbar from './Navbar';
+import ForwardRoundedIcon from '@mui/icons-material/ForwardRounded';
+import { useNavigate } from 'react-router-dom';
+
  
 const HelpDesk = () => {
     
@@ -15,6 +18,8 @@ const HelpDesk = () => {
     const [open, setOpen] = useState(false);
     const [alertmsg, setAlertMsg] = useState('');
     const [severity, setSeverity] = useState('warning');
+
+    const navigate = useNavigate();
  
     const handleSubmit = (event) => {
         event.preventDefault();
@@ -63,11 +68,19 @@ const HelpDesk = () => {
     };
 
 
+    const handleBackwardNavigation = () => {
+        navigate(`/login`);
+      }
+
+
     return (
         <React.Fragment>
             <Navbar />
-            <h1 style={{marginLeft:"42%"}}>Enter Your Details</h1>
-            <form onSubmit={handleSubmit} action={<Link to="/login" />} style={{marginLeft:'60px'}}>
+            <IconButton variant='contained' size='large' sx={{color:'black', mt:3, ml:3}} onClick={handleBackwardNavigation}>
+                <ForwardRoundedIcon style={{fontSize:'40px', transform: 'rotate(-180deg)'}} />
+            </IconButton>
+            <h1 style={{marginLeft:"40%", marginTop:-67}}>Enter Your Details</h1>
+            <form onSubmit={handleSubmit} action={<Link to="/login" />} style={{marginLeft:'40px'}}>
                 <Stack spacing={2} direction="row" sx={{marginBottom: 4}}>
                     <TextField
                         type="text"
@@ -125,7 +138,7 @@ const HelpDesk = () => {
                     Request Help
                 </Button>
             </form>
-            <small style={{marginLeft:"44%"}}>Want to login again? <Link to="/login">Login</Link></small>
+            <small style={{marginLeft:"43%"}}>Want to login again? <Link to="/login">Login</Link></small>
             <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
                 <Alert onClose={handleClose} severity={severity} sx={{ width: 275 }}>
                     {alertmsg}

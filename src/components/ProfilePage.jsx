@@ -9,7 +9,7 @@ import ArrowRightIcon from '@mui/icons-material/ArrowRight';
 import Navbar from './Navbar';
 import axios from 'axios';
 import ForwardRoundedIcon from '@mui/icons-material/ForwardRounded';
-
+import RefreshIcon from '@mui/icons-material/Refresh';
 
 import './ProfilePage.css';
 import dayjs from 'dayjs';
@@ -36,8 +36,21 @@ const ProfilePage = () => {
   const [loggedInUserEmail, setLoggedInUserEmail] = useState('');
   const [filteredUserEmails, setFilteredUserEmails] = useState([]);
   const [selectedAttendeesEmails, setSelectedAttendeesEmails] = useState([]);
+  const [requiredAttendeesCount, setRequiredAttendeesCount] = useState(0);
+  const [attendeeError, setAttendeeError] = useState(false);
 
   useEffect( () => {
+
+    // Check if the user is logged in (you can use your own logic here)
+    // const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+
+    // If the user is not logged in, redirect to the login page
+    // if (!isLoggedIn) {
+    //     navigate('/login');
+    //     // toast.warning("Login again!!");
+    //     console.log("login plss"); // You can return null or a loading message here if needed
+    // }
+
     const fetchRooms = async () => {
       try{
         const response = await axios.get(`http://localhost:8080/api/rooms/get`);
@@ -75,6 +88,21 @@ const ProfilePage = () => {
       }
     }
 
+    // Update the required number of attendees based on the selected location
+    if (location === 'level1' || location === 'level2') {
+      setRequiredAttendeesCount(2);
+    } else {
+      setRequiredAttendeesCount(0);
+    }
+
+    // Validate selected attendees count whenever selectedAttendees changes
+    if (selectedAttendees.length < requiredAttendeesCount) {
+      setAttendeeError(true);
+    } else {
+      setAttendeeError(false);
+    }
+
+    //calling the functions
     fetchRooms();
     fetchUsers();
     fetchLoggedInUser();
@@ -114,7 +142,7 @@ const ProfilePage = () => {
       }
     }
 
-  },[fromDate, toDate, fromTime, toTime, name, loggedInUserEmail, selectedAttendees]);
+  },[fromDate, toDate, fromTime, toTime, name, loggedInUserEmail, selectedAttendees, location, requiredAttendeesCount]);
   
   //to disable the previous dates from the current date
   const shouldDisableDate = (date) => {
@@ -176,12 +204,19 @@ const ProfilePage = () => {
     });
     setSelectedAttendeesEmails(selectedEmails);
     
+    // Validate selected attendees count and show error if needed
+    if (selectedNames.length < requiredAttendeesCount) {
+      setAttendeeError(true);
+    } else {
+      setAttendeeError(false);
+    }
 
   }
 
   const handleLocationChange = (e) => {
     setLocation(e.target.value);
     setSubLocation('');
+
   }
 
   const handleSubLocationChange = (e) => {
@@ -232,7 +267,7 @@ const ProfilePage = () => {
     if(selectedToTime && toDate){
       const [hours, minutes, period] = selectedToTime.split(/[: ]/);
       let hoursToAdd = Number(hours);
-      let minutesToAdd = Number(minutes) + 30;
+      let minutesToAdd = Number(minutes);
 
       if(period === 'PM' && hours !== '12'){
         hoursToAdd += 12;
@@ -338,6 +373,12 @@ const ProfilePage = () => {
       const formattedDate1 = dayjs(fromDate).format('DD/MM/YYYY');
       const formattedDate2 = dayjs(toDate).format('DD/MM/YYYY');
 
+      if (selectedAttendees.length < requiredAttendeesCount) {
+        toast.warning(`Please select at least ${requiredAttendeesCount} attendees.`);
+        return;
+      }
+
+
       const meetingType = isOnlineMeeting ? 'Online Meeting' : 'Offline Meeting';
       const bookingData = {
         roomname: subLocation,
@@ -434,6 +475,9 @@ const ProfilePage = () => {
     navigate(`/homepage/${name}`);
   }
 
+  const handleRefresh = () => {
+    window.location.reload();
+  };
   
 
 
@@ -444,8 +488,11 @@ const ProfilePage = () => {
       <IconButton variant='contained' size='large' sx={{color:'black', ml:2, mt:1}} onClick={handleBackwardNavigation}>
               <ForwardRoundedIcon style={{fontSize:'40px', transform: 'rotate(-180deg)'}} />
       </IconButton>
+      <IconButton sx={{mt:-11, ml:'1176px', color:'black'}} onClick={handleRefresh}>
+            <RefreshIcon sx={{fontSize:'35px'}}/>
+      </IconButton>
     </div>
-      <div className="profile-page" style={{overFlowY:'auto', marginTop:'-105px'}} >
+      <div className="profile-page" style={{overFlowY:'auto', marginTop:'-127px'}} >
         <Box className="container">
           <Typography variant="h4" component="h1" align="center" sx={{ marginBottom: 3 }}>
             New Booking
@@ -586,6 +633,8 @@ const ProfilePage = () => {
                 }}
                 variant="outlined"
                 size='small'
+                error={attendeeError} // Show error state when the number of attendees is less than required
+                helperText={attendeeError ? `Select at least ${requiredAttendeesCount} attendees` : ''} 
               >
                 {users.map((user) => (
                   <MenuItem key={user.email} value={user.name}>
