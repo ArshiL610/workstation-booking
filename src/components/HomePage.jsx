@@ -45,18 +45,10 @@ const HomePage = () => {
     const navigate = useNavigate();
     const {name} = useParams();
     const [userEmail, setUserEmail] = useState('');
+     let index = 1;
 
     useEffect(() => {
 
-        // Check if the user is logged in (you can use your own logic here)
-        // const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
-
-        // If the user is not logged in, redirect to the login page
-        // if (!isLoggedIn) {
-        //     navigate('/login');
-        //     // toast.warning("Login again!!");
-        //     console.log("login plss"); // You can return null or a loading message here if needed
-        // }
 
         const fetchUserData = async () => {
             try{
@@ -110,14 +102,6 @@ return(
         <IconButton variant='contained' size='large' sx={{color:'black', ml:'1170px', mt:1}} onClick={handleForwardNavigation}>
             <ForwardRoundedIcon style={{fontSize:'40px'}} />
         </IconButton>        
-    
-        
-        {/* backward arrow */}
-        {/* <span>
-            <IconButton variant='contained' size='large' sx={{color:'black', mt:-11, ml:2}}>
-                <ForwardRoundedIcon style={{fontSize:'40px', transform: 'rotate(-180deg)'}} />
-            </IconButton>
-        </span> */}
         <span>
             <Button size='large' variant='contained' color='inherit' sx={{ml:65, mt:-5, fontSize:'25px', alignItems:'center'}} onClick={handleProfilePageNavigation}>
                 New Booking
@@ -149,7 +133,7 @@ return(
             <TableBody sx={{maxHeight: 'calc(100vh - 400px)', overflowY:'auto'}}>
             {filteredBookings.map((booking) => (
                 <StyledTableRow key={booking.id}>
-                    <StyledTableCell align='left'><strong>{booking.id}</strong></StyledTableCell>
+                    <StyledTableCell align='left'><strong>{index++}</strong></StyledTableCell>
                     <StyledTableCell align='left'><strong>{booking.purpose}</strong></StyledTableCell>
                     <StyledTableCell align='left'><strong>{booking.fromDate}</strong></StyledTableCell>
                     <StyledTableCell align='left'><strong>{booking.fromTime}</strong></StyledTableCell>

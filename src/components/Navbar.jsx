@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import { AppBar, Avatar, Divider, Toolbar, Typography} from '@mui/material';
 import IconButton from '@mui/material/IconButton';
 import Tooltip from '@mui/material/Tooltip';
@@ -9,6 +9,7 @@ import Logout from '@mui/icons-material/Logout';
 import { useNavigate, useLocation} from 'react-router-dom';
 import InfoIcon from '@mui/icons-material/Info';
 import HomeIcon from '@mui/icons-material/Home';
+import { useAuth } from './AuthContext';
 
 
 const Navbar = ({name}) => {
@@ -18,6 +19,7 @@ const Navbar = ({name}) => {
   const navigate = useNavigate();
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
+  const {isLoggedIn, setIsLoggedIn} = useAuth();
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -36,10 +38,15 @@ const Navbar = ({name}) => {
     navigate("/about");
   }
   const handleLogOut = () => {
-    // setIsAuth(false);
+    setIsLoggedIn(false);
+    console.log('After LogOUt',isLoggedIn);
     setAnchorEl(null);
     navigate("/login");
   }
+
+  useEffect(() => {
+    console.log('isLoggedIn: afterLogOut', isLoggedIn);
+  }, [isLoggedIn]);
 
 
   const excludeLogOutRoutes = ['/', 
@@ -52,7 +59,6 @@ const Navbar = ({name}) => {
                                '/resetpassword/:email',
                                '/helpdesk'];
   const shouldRenderLogOut = !excludeLogOutRoutes.some((route) => (location.pathname === route));
-  // const shouldRenderLogOut = !excludeLogOutRoutes.includes(location.pathname);
 
   const excludeHomeRoutes = ['/homepage/', 
                              '/profilepage/',

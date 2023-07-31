@@ -1,0 +1,20 @@
+import { useEffect } from 'react';
+import { toast } from 'react-toastify';
+
+const DisableBackwardNavigation = () => {
+  useEffect(() => {
+    const handleBackNavigation = () => {
+     
+      toast.warning('Please log in first.');
+    
+    };
+    window.history.pushState(null, null, window.location.href);
+    window.addEventListener('popstate', handleBackNavigation);
+
+    return () => {
+      window.removeEventListener('popstate', handleBackNavigation);
+    };
+  }, []);
+
+  
+ };

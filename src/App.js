@@ -1,9 +1,8 @@
 import './App.css';
 import Login from './components/Login';
-import { Routes, Route, useNavigate, useLocation} from 'react-router-dom';
-import React, {useState, useEffect} from 'react';
+import { Routes, Route} from 'react-router-dom';
+import React,{useEffect} from 'react';
 import HelpDesk from './components/HelpDesk';
-// import SeatSelection from './components/SeatSelection';
 import SignUp from './components/SignUp';
 import EmailVerification from './components/EmailVerification';
 import About from './components/About';
@@ -14,81 +13,54 @@ import ForgotPassword from './components/ForgotPassword';
 import ProfilePage from './components/ProfilePage';
 import ResetVerify from './components/ResetVerfiy';
 import ResetPassword from './components/ResetPassword';
-// import Bookings from './components/Bookings';
-// import Level2 from './components/Level2';
-// import Cabins from './components/Cabins';
-// import DropDownList from './components/DropDownList';
-import { ToastContainer, toast } from 'react-toastify';
+import { ToastContainer} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import HomePage from './components/HomePage';
-// import SessionTimeout from './components/SessionTimeout';
 
+import { useAuth } from './components/AuthContext';
+import DisableBackwardNavigation from './components/DisableBackwardNavigation';
 
 
 
 function App() {
 
-  // const navigate = useNavigate();
-  // const location = useLocation();
+  const {isLoggedIn} = useAuth();
+  useEffect(()=> {
+    console.log(isLoggedIn)
+  })
 
-  //to track authentication
-  // const [isAuth, setIsAuth] = useState(false);
-  //to track the login status
-  // const [isLoggedIn, setIsLoggedIn] = useState(false);
-
-  // const handleSessionTimeout = () => {
-  //   setIsAuth(false);
-  //   navigate('/login');
-  //   toast.warning('Session TimedOut');
-  //   setTimeout(() =>{
-  //     toast.info('Please Login Again');
-  //   }, 500);
-  //   // window.location.href='/login';
-  // }
-
-  // useEffect(() => {
-  //   const isLoggedIn = isAuth;
-  //   const currentPath = location.pathname;
-  //   if (!isLoggedIn && currentPath !== '/login') {
-  //     setIsAuth(false);
-  //     navigate('/login')
-  //   }
-  // }, [isAuth, location, navigate]);
-
-
-  
 
   return (
     <>
       {/* <SessionTimeout timeoutInMinutes={0.2} onTimeout={handleSessionTimeout} /> */}
-      {/* <Navbar /> */}
       <ToastContainer />
-
+      <DisableBackwardNavigation />
       <Routes>
-        <Route path='/' element={<Home />} />
-        <Route path="/signup" element={<SignUp />} />
-        <Route path="/emailverification/:email" element={<EmailVerification />} />
-        <Route path="/forgot-password" element={<ForgotPassword />} />
-        <Route path="/resetverify/:email" element={<ResetVerify />} />
-        <Route path="/resetpassword/:email" element={<ResetPassword />} />
-        <Route path="/helpdesk" element={<HelpDesk />} />
-        <Route path="/about" element={<About />} />
-
-        <Route path="/login" element={<Login  />} />
-        <Route path="/homepage/:name" element={<HomePage />} />
-        <Route path="/profilepage/:name" element={<ProfilePage />} />
-        <Route path="/bookingdetails" element={<BookingDetails />} />
         
+        {isLoggedIn ? (
+          <>
+            <Route path="/homepage/:name" element={<HomePage />} />
+            <Route path="/profilepage/:name" element={<ProfilePage />} />
+            <Route path="/bookingdetails" element={<BookingDetails />} />
+          </>
+        ) : (
+          <>
+            <Route path='/' element={<Home />} />
+            <Route path="/signup" element={<SignUp />} />
+            <Route path="/emailverification/:email" element={<EmailVerification />} />
+            <Route path="/forgot-password" element={<ForgotPassword />} />
+            <Route path="/resetverify/:email" element={<ResetVerify />} />
+            <Route path="/resetpassword/:email" element={<ResetPassword />} />
+            <Route path="/helpdesk" element={<HelpDesk />} />
+            <Route path="/about" element={<About />} />
+            <Route path="/login" element={<Login />} />
+          </>
+        )}       
       </Routes>
-
-      
-      
-    
     </>
   );
 
   
 }
-
 
 export default App;

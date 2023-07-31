@@ -4,6 +4,7 @@ import {Link, useNavigate} from "react-router-dom";
 import axios from 'axios';
 import { toast} from 'react-toastify';
 import Navbar from './Navbar';
+import { useAuth } from './AuthContext';
 
 
 const Login = () => {
@@ -13,16 +14,11 @@ const Login = () => {
     //for cursor loading
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
-    const [loggedIn, setLoggedIn] = useState(false);
+    // to track login status
+    const {setIsLoggedIn} = useAuth();
 
+    
 
-    // useEffect(() =>{
-    //   if(isAuth){
-    //     navigate('/login');
-    //     console.log(isAuth)
-    //   }
-    // },[isAuth, navigate])
-  
 
     const handleSubmit = (event) => {
         event.preventDefault();
@@ -33,11 +29,9 @@ const Login = () => {
         } else if (!password) {
           toast.warning('Please enter your password');
         } else {
+            setIsLoggedIn(true);
             saveCredentialsToDatabase(email, password);
-            console.log(`Email: ${email}\nPassword: ${password}`);
-            // setIsAuth(true);
-            
-              
+            // console.log(`Email: ${email}\nPassword: ${password}`);     
         }
     };
 
@@ -49,9 +43,6 @@ const Login = () => {
               setLoading(false);
               console.log(response.data);
               toast.success('Login Successful');
-              // navigate(`/profilepage/${response.data.name}`);
-              // localStorage.setItem('isLoggedIn', 'true');
-              // setLoggedIn(true);
               navigate(`/homepage/${response.data.name}`);
             }, 1000);
             
@@ -65,8 +56,6 @@ const Login = () => {
           setEmail('');
           setPassword('');
     }
-
-
 
     return (
         <React.Fragment>
@@ -84,7 +73,6 @@ const Login = () => {
                     sx={{mb: 4, width: 400}}
                     value={email}
                     disabled={loading}
-                    // error={emailError} 
                 /><br/>
                 <TextField
                     label='Password'
@@ -94,7 +82,6 @@ const Login = () => {
                     color='secondary'
                     type='password'
                     value={password}
-                    // error={passwordError}
                     sx={{mb: 4, width: 400}}
                     disabled={loading}
                 />
