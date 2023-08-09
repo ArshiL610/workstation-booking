@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState} from 'react';
 import { AppBar, Avatar, Divider, Toolbar, Typography} from '@mui/material';
 import IconButton from '@mui/material/IconButton';
 import Tooltip from '@mui/material/Tooltip';
@@ -17,16 +17,15 @@ const Navbar = ({name}) => {
   // const {name} = useParams();
   const location = useLocation();
   const navigate = useNavigate();
-  const [anchorEl, setAnchorEl] = React.useState(null);
+  const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
-  const {isLoggedIn, setIsLoggedIn} = useAuth();
+  const {setIsLoggedIn} = useAuth();
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
   const handleClose = () => {
     setAnchorEl(null);
-    console.log(shouldRenderLogOut)
   };
 
   const handleHome = () => {
@@ -39,14 +38,11 @@ const Navbar = ({name}) => {
   }
   const handleLogOut = () => {
     setIsLoggedIn(false);
-    console.log('After LogOUt',isLoggedIn);
     setAnchorEl(null);
     navigate("/login");
   }
 
-  useEffect(() => {
-    console.log('isLoggedIn: afterLogOut', isLoggedIn);
-  }, [isLoggedIn]);
+  
 
 
   const excludeLogOutRoutes = ['/', 
@@ -64,6 +60,8 @@ const Navbar = ({name}) => {
                              '/profilepage/',
                              '/bookingdetails'];
   const shouldRenderHome = !excludeHomeRoutes.some((route) => location.pathname.startsWith(route));
+
+  // const excludeAboutRoutes = ['/']
 
 
   return (

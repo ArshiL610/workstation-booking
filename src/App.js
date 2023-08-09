@@ -1,7 +1,7 @@
 import './App.css';
 import Login from './components/Login';
 import { Routes, Route} from 'react-router-dom';
-import React,{useEffect} from 'react';
+import React from 'react';
 import HelpDesk from './components/HelpDesk';
 import SignUp from './components/SignUp';
 import EmailVerification from './components/EmailVerification';
@@ -25,10 +25,6 @@ import DisableBackwardNavigation from './components/DisableBackwardNavigation';
 function App() {
 
   const {isLoggedIn} = useAuth();
-  useEffect(()=> {
-    console.log(isLoggedIn)
-  })
-
 
   return (
     <>

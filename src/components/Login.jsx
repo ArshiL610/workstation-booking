@@ -41,7 +41,6 @@ const Login = () => {
           .then((response) => {
             setTimeout(() => {
               setLoading(false);
-              console.log(response.data);
               toast.success('Login Successful');
               navigate(`/homepage/${response.data.name}`);
             }, 1000);
@@ -49,7 +48,7 @@ const Login = () => {
           })
           .catch((error) => {
             setLoading(false);
-            console.log(error);
+            // console.log(error);
             toast.error('Incorrect details');
           });
           
