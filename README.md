@@ -22,7 +22,7 @@ Follow the steps below to get the Workstation Booking App up and running:
 
 ### Frontend
 
-1. Navigate to the `workstation-booking` directory: `cd frontend`.
+1. Navigat to the `workstation-booking` directory: `cd workstation-booking`.
 2. Install the dependencies: `npm install`.
 3. Configure the backend API endpoint in the `.env` file. (Example: APP_API_URL=http://localhost:8080/api`)
 4. Start the development server: `npm start`.
@@ -30,7 +30,7 @@ Follow the steps below to get the Workstation Booking App up and running:
 
 ### Backend
 
-1. Navigate to the `backend` directory: `cd backend`.
+1. Navigate to the `backend` directory to check out the code.
 2. Configure the database connection details in `application.properties` file.
 3. Build the project: `./mvnw clean package`.
 4. Run the application: `./mvnw spring-boot:run`.
