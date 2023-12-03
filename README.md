@@ -22,9 +22,9 @@ Follow the steps below to get the Workstation Booking App up and running:
 
 ### Frontend
 
-1. Navigat to the `workstation-booking` directory: `cd workstation-booking`.
+1. Navigate to the `workstation-booking` directory: `cd workstation-booking`.
 2. Install the dependencies: `npm install`.
-3. Configure the backend API endpoint in the `.env` file. (Example: APP_API_URL=http://localhost:8080/api`)
+3. Configure the backend API endpoints in the `.env` file. (Example: APP_API_URL=http://localhost:8080/api`)
 4. Start the development server: `npm start`.
 5. Access the app in your browser at `http://localhost:3000`.
 
@@ -40,7 +40,7 @@ Follow the steps below to get the Workstation Booking App up and running:
 
 1. Create a new PostgreSQL database for the Workstation Booking App.
 2. Update the database connection details in the backend's `application.properties` file.
-3. Run the database migrations by executing the SQL scripts available in the `database` directory.
+3. Create the respective tables according to the the ER Diagrams in the [Database-Workstation-Booking](https://github.com/ArshiL610/workstation-booking/tree/main/Database-Workstation-Booking). 
 
 ## Screenshots
 ![home](https://github.com/ArshiL610/workstation-booking/assets/91752244/65c2ac20-e4b5-4b69-9c77-e41cb80820fe)
