@@ -1,6 +1,6 @@
 # Workstation Booking
 
-This Workstation Booking is a web application designed to manage and book workstations in a shared office space. It provides users with the ability to view available workstations, book a workstation for a specific date and time, and manage their bookings. This repository contains the source code for both the frontend and backend components of the application.
+This is a web application designed to manage and book workstations in a shared office space. It provides users with the ability to view available workstations, book a workstation for a specific date and time, and manage their bookings. This repository contains the source code for both the frontend and backend components of the application.
 
 ## Technologies Used
 
