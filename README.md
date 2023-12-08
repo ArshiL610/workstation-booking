@@ -14,6 +14,19 @@ The Workstation Booking App is a web application designed to manage and book wor
 - Frontend Repo: [Frontend](https://github.com/ArshiL610/workstation-booking.git)
 - Backend Repo: [Backend](https://github.com/ArshiL610/workstation-booking/tree/main/Workstation_Booking_Backend)
 
+## Key Features
+
+- **Secure Data Storage**: This application employs standard encryption techniques to safeguard user data, ensuring that all notes and personal information are stored securely.
+
+- **Password Encryption**: User passwords are securely encrypted using industry-standard hashing algorithm(SHA 256), providing an extra layer of protection for user accounts.
+
+- **One-Time Password (OTP) Mechanism**: For added security, this workstation-booking application implements OTP mechanisms for password reset. Users can reset their passwords securely through a one-time code sent to their registered email address.
+
+- **Email Notifications**: Stay informed with automatic email notifications for essential account activities.
+
+- **User-Friendly Interface**: This application is designed with a clean and intuitive user interface, providing a seamless experience for users of all technical backgrounds.
+
+
 ## Prerequisites
 
 Before running the Workstation Booking App, ensure you have the following prerequisites installed:
